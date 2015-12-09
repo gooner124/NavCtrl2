@@ -7,16 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Company.h"
+#import "DataAccessObject.h"
 
 @class WebPageViewController;
 
 @interface ProductViewController : UITableViewController
 
 @property (nonatomic, retain) NSMutableArray *products;
-@property (nonatomic, retain) NSMutableArray *appleArray;
-@property (nonatomic, retain) NSMutableArray *samsungArray;
-@property (nonatomic, retain) NSMutableArray *lgArray;
-@property (nonatomic, retain) NSMutableArray *htcArray;
+@property (nonatomic,retain) Company *currentCompany;
 
 
 @property (nonatomic, retain)  WebPageViewController *webPageViewController;
