@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddCompanyViewController">
+            <connections>
+                <outlet property="companyName" destination="hnE-NK-5rN" id="gWy-uq-qwv"/>
+                <outlet property="createCompanyButton" destination="WvU-A1-nMa" id="ETV-jE-jvF"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAI-9f-Rhm">
+                    <rect key="frame" x="226" y="139" width="148" height="43"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WvU-A1-nMa">
+                            <rect key="frame" x="7" y="7" width="134" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" title="Create Company">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="createCompanyButtonPressed:" destination="-1" eventType="touchUpInside" id="YDu-5K-lEQ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="148" id="D1o-uq-i4m"/>
+                        <constraint firstAttribute="height" constant="43" id="zD1-2w-7US"/>
+                    </constraints>
+                </view>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hnE-NK-5rN">
+                    <rect key="frame" x="238" y="82" width="124" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" red="0.60556999980000004" green="1" blue="0.58176699649999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="hnE-NK-5rN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="238" id="6xs-xL-Hom"/>
+                <constraint firstItem="hnE-NK-5rN" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-203" id="TGi-I3-x6Y"/>
+                <constraint firstItem="TAI-9f-Rhm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="YoL-LU-9Cn"/>
+                <constraint firstItem="TAI-9f-Rhm" firstAttribute="top" secondItem="hnE-NK-5rN" secondAttribute="bottom" constant="27" id="g9c-La-tpD"/>
+                <constraint firstItem="hnE-NK-5rN" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="iTe-4d-Ccu"/>
+            </constraints>
+            <point key="canvasLocation" x="174" y="343"/>
+        </view>
+    </objects>
+</document>

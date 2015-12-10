@@ -9,14 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "Company.h"
 #import "DataAccessObject.h"
+#import "EditCompanyViewController.h"
 
 @class ProductViewController;
+@class AddCompanyViewController;
+@class EditCompanyViewController;
 
 @interface CompanyViewController : UITableViewController
 
 @property (nonatomic, retain) NSMutableArray *companyList;
 
 
-@property (nonatomic, retain) IBOutlet  ProductViewController * productViewController;
+@property (nonatomic, retain) IBOutlet  ProductViewController *productViewController;
+@property (nonatomic, strong) AddCompanyViewController *addCompanyViewController;
+@property (nonatomic, strong) EditCompanyViewController *editCompanyViewController;
+
 
 @end

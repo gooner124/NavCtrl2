@@ -10,6 +10,7 @@
 
 @interface DataAccessObject() {
     NSMutableArray *companyList;
+    NSString *bulletPoint;
  
 }
 
@@ -28,26 +29,27 @@
 
 -(id)init {
     self = [super init];
+    bulletPoint = @"bullet_point.jpeg";
     
     if (self) {
         Company *apple = [[Company alloc] init];
         apple.name = @"Apple mobile devices";
-        apple.logo = @"apple logo.tiff";
+        apple.logo = bulletPoint;
         
         // Apple Products
         Product *ipad = [[Product alloc] init];
         ipad.productName = @"iPad";
-        ipad.productLOGO = @"iPad_logo.jpeg";
+        ipad.productLOGO = bulletPoint;
         ipad.productURL = @"https://www.apple.com/ipad-pro/";
         
         Product *ipod = [[Product alloc] init];
         ipod.productName = @"iPod";
-        ipod.productLOGO = @"iPod_touch_logo.jpeg";
+        ipod.productLOGO = bulletPoint;
         ipod.productURL = @"https://www.apple.com/ipod-touch/";
         
         Product *iphone = [[Product alloc] init];
         iphone.productName = @"iPhone";
-        iphone.productLOGO = @"iPhone_logo.png";
+        iphone.productLOGO = bulletPoint;
         iphone.productURL = @"https://www.apple.com/iphone";
         
         apple.products = [[NSMutableArray alloc] initWithObjects: ipad, ipod, iphone, nil];
@@ -55,22 +57,22 @@
         //Samsung company
         Company *samsung = [[Company alloc] init] ;
         samsung.name = @"Samsung mobile devices";
-        samsung.logo = @"Samsung_Logo.png";
+        samsung.logo = bulletPoint;
         
         //Samsung products
         Product *galaxyS4 = [[Product alloc] init];
         galaxyS4.productName = @"Galaxy S4";
-        galaxyS4.productLOGO = @"S4_logo.png";
+        galaxyS4.productLOGO = bulletPoint;
         galaxyS4.productURL = @"https://www.samsung.com/global/microsite/galaxys4/";
         
         Product *galaxyNote = [[Product alloc] init];
         galaxyNote.productName = @"Galaxy Note";
-        galaxyNote.productLOGO = @"Note_logo.png";
+        galaxyNote.productLOGO = bulletPoint;
         galaxyNote.productURL = @"https://www.samsung.com/global/microsite/galaxynote/note/index.html?type=find";
         
         Product *galaxyTab = [[Product alloc] init];
         galaxyTab.productName = @"Galaxy Tab";
-        galaxyTab.productLOGO = @"tab_logo.jpeg";
+        galaxyTab.productLOGO = bulletPoint;
         galaxyTab.productURL = @"https://www.samsung.com/us/mobile/galaxy-tab/";
         
         samsung.products = [[NSMutableArray alloc] initWithObjects: galaxyS4, galaxyNote, galaxyTab, nil];
@@ -78,22 +80,22 @@
         //LG company
         Company *lg = [[Company alloc] init];
         lg.name = @"LG mobile devices";
-        lg.logo = @"lg logo.jpg";
+        lg.logo = bulletPoint;
         
         //LG products
         Product *v10 = [[Product alloc] init];
         v10.productName = @"V10";
-        v10.productLOGO = @"V10_pic.jpeg";
+        v10.productLOGO = bulletPoint;
         v10.productURL = @"https://www.lg.com/us/mobile-phones/v10";
         
         Product *vista2 = [[Product alloc] init];
         vista2.productName = @"Vista 2";
-        vista2.productLOGO = @"vista2_pic.jpeg";
+        vista2.productLOGO = bulletPoint;
         vista2.productURL = @"https://www.lg.com/us/cell-phones/lg-H740-g-vista-2";
         
         Product *g4 = [[Product alloc] init];
         g4.productName = @"G4";
-        g4.productLOGO = @"g4_pic.jpeg";
+        g4.productLOGO = bulletPoint;
         g4.productURL = @"https://www.lg.com/us/mobile-phones/g4";
         
         lg.products = [[NSMutableArray alloc] initWithObjects: v10, vista2, g4, nil];
@@ -101,22 +103,22 @@
         //HTC company
         Company *htc = [[Company alloc] init];
         htc.name = @"HTC mobile devices";
-        htc.logo =  @"htc_logo.jpg";
+        htc.logo =  bulletPoint;
         
         //HTC products
         Product *oneA9 = [[Product alloc] init];
         oneA9.productName = @"One A9";
-        oneA9.productLOGO = @"One_A9_pic.jpeg";
+        oneA9.productLOGO = bulletPoint;
         oneA9.productURL = @"https://www.htc.com/us/smartphones/htc-one-a9/";
         
         Product *desireEye = [[Product alloc] init];
         desireEye.productName = @"Desire EYE";
-        desireEye.productLOGO = @"Desire_eye_pic.jpeg";
+        desireEye.productLOGO = bulletPoint;
         desireEye.productURL = @"https://www.htc.com/us/smartphones/htc-desire-eye/";
         
         Product *oneM9 = [[Product alloc] init];
         oneM9.productName = @"One M9";
-        oneM9.productLOGO = @"One_M9_pic.jpeg";
+        oneM9.productLOGO = bulletPoint;
         oneM9.productURL = @"https://www.htc.com/us/smartphones/htc-one-m9/";
         
         htc.products = [[NSMutableArray alloc] initWithObjects: oneA9, desireEye, oneM9, nil];
@@ -132,18 +134,72 @@
     return companyList;
 }
 
-- (void)addCompany:(Company*)company atIndex:(int)index
-{
-    if (companyList.count >= index)
-        [companyList insertObject:company atIndex:index];
-    else
-        [companyList addObject:company];
+- (void) createCompany:(NSString*) companyName{
+    Company *company = [[Company alloc] init];
+    company.name = companyName;
+    company.logo = bulletPoint;
+    
+    [companyList addObject:company];
 }
 
-- (void)deleteCompanyAtIndex:(int)index
-{
-    [companyList removeObjectAtIndex:index];
+- (void)editCompany:(Company *)currentCompany WithCompanyName:(NSString *)newCompanyName{
+    currentCompany.name = newCompanyName;
 }
 
+- (void)addProduct:(NSString*) productName WithProductWebsite:(NSString *)productWebsite ToCompany:(Company *)currentCompany {
+    Product *product = [[Product alloc] init];
+    product.productName = productName;
+    product.productURL = productWebsite;
+    product.productLOGO = bulletPoint;
+    
+    [[currentCompany products] addObject:product];
+}
+
+- (void)editProduct:(Product*)currentProduct WithProductName:(NSString*)newProductName WithProductWebsite:(NSString*)newProductWebsite {
+    
+    currentProduct.productName = newProductName;
+    currentProduct.productURL = newProductWebsite;
+}
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

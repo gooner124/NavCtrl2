@@ -9,6 +9,8 @@
 #import "ProductViewController.h"
 #import "WebPageViewController.h"
 #import "CompanyViewController.h"
+#import "EditProductViewController.h"
+#import "AddProductViewController.h"
 
 @interface ProductViewController ()
 
@@ -28,11 +30,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
+    //preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    //Create an Add button in the navigation bar for this view controller.
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                  target:self action:@selector(addButtonPressed:)];
+    //Display the add and edit button on the right of the navigation bar
+    self.navigationItem.rightBarButtonItems = @[self.editButtonItem, addButton];
+    
+    //Initialize the long press gesture recognizer
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(detectLongPress:)];
+    
+    //Specify the duration for the long press
+    longPressRecognizer.minimumPressDuration = 0.5;
+    
+    //Add the long press gesture to the view
+    [self.view addGestureRecognizer:longPressRecognizer];
     
 }
 
@@ -142,8 +157,39 @@
     // Push the view controller.
     [self.navigationController pushViewController:self.webPageViewController animated:YES];
 }
- 
 
+
+#pragma mark add product
+-(void) addButtonPressed: (id) sender {
+    self.addProductViewController = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
+    
+    self.addProductViewController.title = @"Add Product";
+    self.addProductViewController.currentCompany = self.currentCompany;
+    
+    [self.navigationController
+     pushViewController:self.addProductViewController
+     animated:YES];
+    
+}
+
+#pragma mark edit product
+
+-(void)detectLongPress:(UILongPressGestureRecognizer *) recognizer {
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint location = [recognizer locationInView:self.tableView];
+        NSIndexPath *touchedIndexPath = [self.tableView indexPathForRowAtPoint:location];
+        
+        self.editProductViewController = [[EditProductViewController alloc] initWithNibName:@"EditProductViewController" bundle:nil];
+        
+        self.editProductViewController.title = @"Edit Product Information";
+        Product *product = [[Product alloc] init];
+        product = [self.currentCompany.products objectAtIndex:[touchedIndexPath row]];
+        self.editProductViewController.currentProduct = product;
+        // Push the view controller.
+        [self.navigationController pushViewController:self.editProductViewController animated:YES];
+    }
+}
 
 - (void)dealloc {
     [self.webPageViewController release];

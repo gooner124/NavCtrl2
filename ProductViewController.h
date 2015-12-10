@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Company.h"
-#import "DataAccessObject.h"
+
 
 @class WebPageViewController;
+@class AddProductViewController;
+@class EditProductViewController;
 
 @interface ProductViewController : UITableViewController
 
@@ -18,7 +20,9 @@
 @property (nonatomic,retain) Company *currentCompany;
 
 
-@property (nonatomic, retain)  WebPageViewController *webPageViewController;
+@property (nonatomic, retain) WebPageViewController *webPageViewController;
+@property (nonatomic, strong) AddProductViewController *addProductViewController;
+@property (nonatomic, strong) EditProductViewController *editProductViewController;
 
 
 @end

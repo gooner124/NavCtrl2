@@ -26,9 +26,18 @@
 		3445DFEB1C16507D0038AA8D /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3445DFEA1C16507D0038AA8D /* WebPageViewController.m */; };
 		3445DFEF1C165B020038AA8D /* WebPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3445DFEE1C165B020038AA8D /* WebPage.xib */; };
 		34C2023E1C189444004E104E /* DataAccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C2023D1C189444004E104E /* DataAccessObject.m */; };
+		34C202431C18B19F004E104E /* AddCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C202411C18B19F004E104E /* AddCompanyViewController.m */; };
+		34C202441C18B19F004E104E /* AddCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C202421C18B19F004E104E /* AddCompanyViewController.xib */; };
+		34C202491C18B1EF004E104E /* EditCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C202471C18B1EF004E104E /* EditCompanyViewController.m */; };
+		34C2024A1C18B1EF004E104E /* EditCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C202481C18B1EF004E104E /* EditCompanyViewController.xib */; };
+		34C202541C18D6FB004E104E /* EditProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C202521C18D6FB004E104E /* EditProductViewController.m */; };
+		34C202551C18D6FB004E104E /* EditProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C202531C18D6FB004E104E /* EditProductViewController.xib */; };
 		34D77DC51C17333C0055A138 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D77DC41C17333C0055A138 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		34D77DCA1C175F2F0055A138 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D77DC91C175F2F0055A138 /* Company.m */; };
 		34D77DCD1C175F780055A138 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D77DCC1C175F780055A138 /* Product.m */; };
+		34EE4C371C18E02800049C2D /* AddProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34EE4C351C18E02800049C2D /* AddProductViewController.m */; };
+		34EE4C381C18E02800049C2D /* AddProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34EE4C361C18E02800049C2D /* AddProductViewController.xib */; };
+		34EE4C3A1C19DCD300049C2D /* bullet_point.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 34EE4C391C19DCD300049C2D /* bullet_point.jpeg */; };
 		48A656B518163BF200746D36 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A656B418163BF200746D36 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		48A656B718163BF200746D36 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A656B618163BF200746D36 /* CoreGraphics.framework */; };
 		48A656B918163BF200746D36 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A656B818163BF200746D36 /* UIKit.framework */; };
@@ -79,11 +88,24 @@
 		3445DFEE1C165B020038AA8D /* WebPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPage.xib; sourceTree = "<group>"; };
 		34C2023C1C189444004E104E /* DataAccessObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataAccessObject.h; sourceTree = "<group>"; };
 		34C2023D1C189444004E104E /* DataAccessObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataAccessObject.m; sourceTree = "<group>"; };
+		34C202401C18B19F004E104E /* AddCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCompanyViewController.h; sourceTree = "<group>"; };
+		34C202411C18B19F004E104E /* AddCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCompanyViewController.m; sourceTree = "<group>"; };
+		34C202421C18B19F004E104E /* AddCompanyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCompanyViewController.xib; sourceTree = "<group>"; };
+		34C202461C18B1EF004E104E /* EditCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditCompanyViewController.h; sourceTree = "<group>"; };
+		34C202471C18B1EF004E104E /* EditCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditCompanyViewController.m; sourceTree = "<group>"; };
+		34C202481C18B1EF004E104E /* EditCompanyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditCompanyViewController.xib; sourceTree = "<group>"; };
+		34C202511C18D6FB004E104E /* EditProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProductViewController.h; sourceTree = "<group>"; };
+		34C202521C18D6FB004E104E /* EditProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProductViewController.m; sourceTree = "<group>"; };
+		34C202531C18D6FB004E104E /* EditProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProductViewController.xib; sourceTree = "<group>"; };
 		34D77DC41C17333C0055A138 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		34D77DC81C175F2F0055A138 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		34D77DC91C175F2F0055A138 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		34D77DCB1C175F780055A138 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
 		34D77DCC1C175F780055A138 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		34EE4C341C18E02800049C2D /* AddProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductViewController.h; sourceTree = "<group>"; };
+		34EE4C351C18E02800049C2D /* AddProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductViewController.m; sourceTree = "<group>"; };
+		34EE4C361C18E02800049C2D /* AddProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProductViewController.xib; sourceTree = "<group>"; };
+		34EE4C391C19DCD300049C2D /* bullet_point.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bullet_point.jpeg; sourceTree = SOURCE_ROOT; };
 		48A656B118163BF200746D36 /* NavCtrl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavCtrl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A656B418163BF200746D36 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		48A656B618163BF200746D36 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,6 +165,36 @@
 			name = WebPageViewController;
 			sourceTree = "<group>";
 		};
+		34C2023F1C18B163004E104E /* AddCompanyViewController */ = {
+			isa = PBXGroup;
+			children = (
+				34C202401C18B19F004E104E /* AddCompanyViewController.h */,
+				34C202411C18B19F004E104E /* AddCompanyViewController.m */,
+				34C202421C18B19F004E104E /* AddCompanyViewController.xib */,
+			);
+			name = AddCompanyViewController;
+			sourceTree = "<group>";
+		};
+		34C202451C18B1B2004E104E /* EditCompanyViewController */ = {
+			isa = PBXGroup;
+			children = (
+				34C202461C18B1EF004E104E /* EditCompanyViewController.h */,
+				34C202471C18B1EF004E104E /* EditCompanyViewController.m */,
+				34C202481C18B1EF004E104E /* EditCompanyViewController.xib */,
+			);
+			name = EditCompanyViewController;
+			sourceTree = "<group>";
+		};
+		34C2024B1C18D40C004E104E /* EditProductViewController */ = {
+			isa = PBXGroup;
+			children = (
+				34C202511C18D6FB004E104E /* EditProductViewController.h */,
+				34C202521C18D6FB004E104E /* EditProductViewController.m */,
+				34C202531C18D6FB004E104E /* EditProductViewController.xib */,
+			);
+			name = EditProductViewController;
+			sourceTree = "<group>";
+		};
 		34D77DC61C175EDB0055A138 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +213,16 @@
 				34C2023D1C189444004E104E /* DataAccessObject.m */,
 			);
 			name = DAO;
+			sourceTree = "<group>";
+		};
+		34EE4C331C18DFFC00049C2D /* AddProductViewController */ = {
+			isa = PBXGroup;
+			children = (
+				34EE4C341C18E02800049C2D /* AddProductViewController.h */,
+				34EE4C351C18E02800049C2D /* AddProductViewController.m */,
+				34EE4C361C18E02800049C2D /* AddProductViewController.xib */,
+			);
+			name = AddProductViewController;
 			sourceTree = "<group>";
 		};
 		483796CB1BCBF7A00062D5AB /* AppDelegate */ = {
@@ -230,6 +292,10 @@
 				483796CC1BCBF7C70062D5AB /* ParentViewController */,
 				483796CD1BCBF7EB0062D5AB /* ProductViewController */,
 				3445DFE51C1629380038AA8D /* WebPageViewController */,
+				34C2023F1C18B163004E104E /* AddCompanyViewController */,
+				34C202451C18B1B2004E104E /* EditCompanyViewController */,
+				34EE4C331C18DFFC00049C2D /* AddProductViewController */,
+				34C2024B1C18D40C004E104E /* EditProductViewController */,
 				48A656C618163BF200746D36 /* Images.xcassets */,
 				48A656E518163C1B00746D36 /* CompanyViewController.xib */,
 				48A656BB18163BF200746D36 /* Supporting Files */,
@@ -240,6 +306,7 @@
 		48A656BB18163BF200746D36 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				34EE4C391C19DCD300049C2D /* bullet_point.jpeg */,
 				3445DFDF1C1622EA0038AA8D /* tab_logo.jpeg */,
 				3445DFE01C1622EA0038AA8D /* V10_pic.jpeg */,
 				3445DFE11C1622EA0038AA8D /* vista2_pic.jpeg */,
@@ -371,14 +438,19 @@
 				48A656BF18163BF200746D36 /* InfoPlist.strings in Resources */,
 				3445DFE31C1622EA0038AA8D /* V10_pic.jpeg in Resources */,
 				48A656C718163BF200746D36 /* Images.xcassets in Resources */,
+				34EE4C3A1C19DCD300049C2D /* bullet_point.jpeg in Resources */,
+				34C2024A1C18B1EF004E104E /* EditCompanyViewController.xib in Resources */,
 				3445DFC81C161A860038AA8D /* htc_logo.jpg in Resources */,
 				3445DFD71C1622CB0038AA8D /* One_A9_pic.jpeg in Resources */,
 				3445DFE21C1622EA0038AA8D /* tab_logo.jpeg in Resources */,
 				3445DFD11C1620550038AA8D /* iPhone_logo.png in Resources */,
 				3445DFD81C1622CB0038AA8D /* One_M9_pic.jpeg in Resources */,
 				3445DFCA1C161A900038AA8D /* lg logo.jpg in Resources */,
+				34C202441C18B19F004E104E /* AddCompanyViewController.xib in Resources */,
+				34C202551C18D6FB004E104E /* EditProductViewController.xib in Resources */,
 				3445DFC61C1616270038AA8D /* apple logo.tiff in Resources */,
 				3445DFDB1C1622D80038AA8D /* Desire_eye_pic.jpeg in Resources */,
+				34EE4C381C18E02800049C2D /* AddProductViewController.xib in Resources */,
 				3445DFE41C1622EA0038AA8D /* vista2_pic.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,13 +470,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34C202431C18B19F004E104E /* AddCompanyViewController.m in Sources */,
 				34C2023E1C189444004E104E /* DataAccessObject.m in Sources */,
+				34C202541C18D6FB004E104E /* EditProductViewController.m in Sources */,
 				34D77DCD1C175F780055A138 /* Product.m in Sources */,
 				3445DFEB1C16507D0038AA8D /* WebPageViewController.m in Sources */,
+				34C202491C18B1EF004E104E /* EditCompanyViewController.m in Sources */,
 				34D77DCA1C175F2F0055A138 /* Company.m in Sources */,
 				48A656E618163C1B00746D36 /* CompanyViewController.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
+				34EE4C371C18E02800049C2D /* AddProductViewController.m in Sources */,
 				48A656EB18163F8700746D36 /* ProductViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

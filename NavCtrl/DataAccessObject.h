@@ -13,8 +13,12 @@
 @interface DataAccessObject : NSObject
 
 -(NSMutableArray*) getCompanies;
-- (void)addCompany:(Company*)company atIndex:(int)index;
-- (void)deleteCompanyAtIndex:(int)index;
 + (id)sharedDAO;
+
+
+- (void)createCompany:(NSString*) companyName;
+- (void)editCompany:(Company *)currentCompany WithCompanyName:(NSString *)newCompanyName;
+- (void)addProduct:(NSString*) productName WithProductWebsite:(NSString *)productWebsite ToCompany:(Company *)currentCompany;
+- (void)editProduct:(Product*)currentProduct WithProductName:(NSString*)newProductName WithProductWebsite:(NSString*)newProductWebsite;
 
 @end
