@@ -52,8 +52,8 @@
     //Add the long press gesture to the view
     [self.view addGestureRecognizer:longPressRecognizer];
     
-    //self.companyList = [[DataAccessObject sharedDAO] getCompanies];
     self.title = @"Mobile device makers";
+
     
 }
 
@@ -61,6 +61,41 @@
     
     [super viewWillAppear:animated];
     self.companyList = [[DataAccessObject sharedDAO] getCompanies];
+    NSString *stockURL = @"http://finance.yahoo.com/d/quotes.csv?s=";
+    for (Company *company in self.companyList) {
+        NSString *symbol = company.stockSymbol;
+        stockURL = [stockURL stringByAppendingString:symbol];
+        stockURL = [stockURL stringByAppendingString:@"+"];
+    }
+    
+    //NSURLSession to get stock prices of companies
+    NSString *formatURL = @"&f=a";
+    stockURL = [stockURL stringByAppendingString:formatURL];
+
+    self.stockPriceUrl = stockURL;
+    NSURL *url = [NSURL URLWithString:self.stockPriceUrl];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        //Convert csv to string
+        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        
+        self.stockPriceArray = companyAndStockPrices;
+        int i = 0;
+        for (Company *company in self.companyList) {
+            company.stockPrice = self.stockPriceArray[i];
+            i++;
+            
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
+    [dataTask resume];
     [self.tableView reloadData];
 }
 
@@ -73,15 +108,11 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.companyList count];
 }
@@ -90,13 +121,14 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
     Company *company = [self.companyList objectAtIndex:[indexPath row]];
     cell.textLabel.text = company.name;
     cell.imageView.image = [UIImage imageNamed:company.logo];
+    cell.detailTextLabel.text = company.stockPrice;
     
     return cell;
 }
@@ -193,6 +225,8 @@
     }
 
 }
+
+
 
 //- (void)dealloc {
 //    [super dealloc];

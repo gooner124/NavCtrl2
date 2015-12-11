@@ -34,8 +34,9 @@
     if (self) {
         Company *apple = [[Company alloc] init];
         apple.name = @"Apple mobile devices";
+        apple.stockSymbol = @"AAPL";
         apple.logo = bulletPoint;
-        
+
         // Apple Products
         Product *ipad = [[Product alloc] init];
         ipad.productName = @"iPad";
@@ -57,6 +58,7 @@
         //Samsung company
         Company *samsung = [[Company alloc] init] ;
         samsung.name = @"Samsung mobile devices";
+        samsung.stockSymbol = @"005930.KS";
         samsung.logo = bulletPoint;
         
         //Samsung products
@@ -80,6 +82,7 @@
         //LG company
         Company *lg = [[Company alloc] init];
         lg.name = @"LG mobile devices";
+        lg.stockSymbol = @"066570.KS";
         lg.logo = bulletPoint;
         
         //LG products
@@ -103,6 +106,7 @@
         //HTC company
         Company *htc = [[Company alloc] init];
         htc.name = @"HTC mobile devices";
+        htc.stockSymbol = @"2498.TW";
         htc.logo =  bulletPoint;
         
         //HTC products
@@ -134,9 +138,10 @@
     return companyList;
 }
 
-- (void) createCompany:(NSString*) companyName{
+- (void) createCompany:(NSString*) companyName stockSymbol:(NSString*)stockSymbol{
     Company *company = [[Company alloc] init];
     company.name = companyName;
+    company.stockSymbol = stockSymbol;
     company.logo = bulletPoint;
     
     [companyList addObject:company];

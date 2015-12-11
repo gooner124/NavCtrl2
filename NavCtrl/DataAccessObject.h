@@ -16,7 +16,7 @@
 + (id)sharedDAO;
 
 
-- (void)createCompany:(NSString*) companyName;
+- (void)createCompany:(NSString*) companyName stockSymbol:(NSString *)stockSymbol;
 - (void)editCompany:(Company *)currentCompany WithCompanyName:(NSString *)newCompanyName;
 - (void)addProduct:(NSString*) productName WithProductWebsite:(NSString *)productWebsite ToCompany:(Company *)currentCompany;
 - (void)editProduct:(Product*)currentProduct WithProductName:(NSString*)newProductName WithProductWebsite:(NSString*)newProductWebsite;
