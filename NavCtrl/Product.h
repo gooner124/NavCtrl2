@@ -10,6 +10,8 @@
 
 @interface Product : NSObject
 
+@property (nonatomic, assign) int uniqueId;
+@property (nonatomic, assign) int company_uniqueId;
 @property(nonatomic,strong) NSString *productName;
 @property(nonatomic,strong) NSString *productLOGO;
 @property(nonatomic,strong) NSString *productURL;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddProductViewController">
             <connections>
                 <outlet property="addProductButton" destination="mUR-L4-5G6" id="yA5-Pg-xYN"/>
+                <outlet property="productLogo" destination="mnX-9R-nEQ" id="YG6-ed-CWW"/>
                 <outlet property="productName" destination="QuK-1G-9a6" id="Gkh-0a-bEZ"/>
                 <outlet property="productWebsite" destination="N7F-vs-2EL" id="ou7-fZ-Kgw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -18,8 +19,23 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Product name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QuK-1G-9a6">
+                    <rect key="frame" x="239" y="68" width="123" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Product website" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N7F-vs-2EL">
+                    <rect key="frame" x="239" y="117" width="123" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Product logo" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mnX-9R-nEQ">
+                    <rect key="frame" x="239" y="165" width="123" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j6i-bb-otG">
-                    <rect key="frame" x="239" y="164" width="123" height="35"/>
+                    <rect key="frame" x="239" y="217" width="123" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUR-L4-5G6">
                             <rect key="frame" x="7" y="3" width="108" height="30"/>
@@ -38,27 +54,21 @@
                         <constraint firstAttribute="height" constant="35" id="d6v-Uz-uXc"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Product name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QuK-1G-9a6">
-                    <rect key="frame" x="239" y="68" width="123" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Product website" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N7F-vs-2EL">
-                    <rect key="frame" x="239" y="117" width="123" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
             </subviews>
             <color key="backgroundColor" red="0.60556999980000004" green="1" blue="0.58176699649999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="QuK-1G-9a6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="239" id="41y-ik-uS3"/>
+                <constraint firstItem="mnX-9R-nEQ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-120" id="95Q-J0-Nna"/>
                 <constraint firstItem="j6i-bb-otG" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AId-bG-YOf"/>
                 <constraint firstItem="N7F-vs-2EL" firstAttribute="top" secondItem="QuK-1G-9a6" secondAttribute="bottom" constant="19" id="B82-a6-nuT"/>
+                <constraint firstItem="j6i-bb-otG" firstAttribute="top" secondItem="mnX-9R-nEQ" secondAttribute="bottom" constant="22" id="ECZ-gJ-9WE"/>
                 <constraint firstItem="N7F-vs-2EL" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LS9-TA-iTJ"/>
                 <constraint firstItem="N7F-vs-2EL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="239" id="PtC-qp-Ecp"/>
                 <constraint firstItem="QuK-1G-9a6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Qyf-8f-J0x"/>
-                <constraint firstItem="j6i-bb-otG" firstAttribute="top" secondItem="N7F-vs-2EL" secondAttribute="bottom" constant="17" id="jfh-Gb-LGt"/>
+                <constraint firstItem="mnX-9R-nEQ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RDS-E9-gqK"/>
+                <constraint firstItem="mnX-9R-nEQ" firstAttribute="top" secondItem="N7F-vs-2EL" secondAttribute="bottom" constant="18" id="SXb-zu-d9E"/>
                 <constraint firstItem="QuK-1G-9a6" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-217" id="nZB-pD-Fp0"/>
+                <constraint firstItem="mnX-9R-nEQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="239" id="wLx-md-4qS"/>
             </constraints>
         </view>
     </objects>

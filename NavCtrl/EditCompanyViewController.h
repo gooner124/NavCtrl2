@@ -12,6 +12,8 @@
 
 @interface EditCompanyViewController : UIViewController
 @property (retain, nonatomic) IBOutlet UITextField *companyName;
+@property (retain, nonatomic) IBOutlet UITextField *stockSymbol;
+@property (retain, nonatomic) IBOutlet UITextField *companyLogo;
 @property (retain, nonatomic) Company *currentCompany;
 
 @property (retain, nonatomic) IBOutlet UIButton *editCompany;

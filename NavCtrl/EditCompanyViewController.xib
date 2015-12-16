@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -7,8 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditCompanyViewController">
             <connections>
+                <outlet property="companyLogo" destination="3Mc-ug-E7i" id="hBV-Lg-RMa"/>
                 <outlet property="companyName" destination="am9-DC-Jii" id="d25-mj-0Vk"/>
                 <outlet property="editCompany" destination="CHB-Ta-eQG" id="3tY-2V-ckI"/>
+                <outlet property="stockSymbol" destination="cc2-EP-Xce" id="X7v-b5-m4E"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,12 +20,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="am9-DC-Jii">
-                    <rect key="frame" x="239" y="102" width="122" height="30"/>
+                    <rect key="frame" x="231" y="102" width="138" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cc2-EP-Xce">
+                    <rect key="frame" x="231" y="152" width="138" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Mc-ug-E7i">
+                    <rect key="frame" x="231" y="201" width="138" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YY5-HW-pNH">
-                    <rect key="frame" x="231" y="156" width="138" height="35"/>
+                    <rect key="frame" x="231" y="250" width="138" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CHB-Ta-eQG">
                             <rect key="frame" x="8" y="3" width="122" height="30"/>
@@ -45,11 +57,20 @@
             </subviews>
             <color key="backgroundColor" red="0.60556999976012782" green="1" blue="0.58176699649405161" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="am9-DC-Jii" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="239" id="Ccv-Vx-pFY"/>
-                <constraint firstItem="YY5-HW-pNH" firstAttribute="top" secondItem="am9-DC-Jii" secondAttribute="bottom" constant="24" id="DQ7-Kx-HDf"/>
+                <constraint firstItem="am9-DC-Jii" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-183" id="7iZ-79-yO3"/>
+                <constraint firstItem="am9-DC-Jii" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="BG7-nN-5BY"/>
+                <constraint firstItem="3Mc-ug-E7i" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="231" id="Mwh-sj-Pm2"/>
+                <constraint firstItem="3Mc-ug-E7i" firstAttribute="top" secondItem="cc2-EP-Xce" secondAttribute="bottom" constant="19" id="Qmn-sb-nm4"/>
                 <constraint firstItem="am9-DC-Jii" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Qnu-E1-bfM"/>
                 <constraint firstItem="YY5-HW-pNH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RW9-Fj-VwO"/>
-                <constraint firstItem="am9-DC-Jii" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-183" id="pEL-Hn-C8C"/>
+                <constraint firstItem="YY5-HW-pNH" firstAttribute="top" secondItem="3Mc-ug-E7i" secondAttribute="bottom" constant="19" id="UiS-27-SNn"/>
+                <constraint firstItem="cc2-EP-Xce" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="231" id="byL-Zm-PmT"/>
+                <constraint firstItem="3Mc-ug-E7i" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fxW-MV-jbE"/>
+                <constraint firstItem="am9-DC-Jii" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="231" id="kLJ-ug-wnp"/>
+                <constraint firstItem="cc2-EP-Xce" firstAttribute="top" secondItem="am9-DC-Jii" secondAttribute="bottom" constant="20" id="kW4-R5-XgG"/>
+                <constraint firstItem="cc2-EP-Xce" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="o18-D1-2nQ"/>
+                <constraint firstItem="3Mc-ug-E7i" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-84" id="pQh-FR-zg6"/>
+                <constraint firstItem="cc2-EP-Xce" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-133" id="ul7-pV-Rh2"/>
             </constraints>
         </view>
     </objects>

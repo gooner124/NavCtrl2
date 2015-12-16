@@ -1,24 +1,28 @@
 //
 //  DataAccessObject.h
-//  NavCtrl
+//  NavCtrl - HIIIIIIIIIIII
 //
 //  Created by Matthew Paravati on 12/9/15.
 //  Copyright © 2015 Aditya Narayan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "sqlite3.h"
 #import "Company.h"
 #import "Product.h"
 
 @interface DataAccessObject : NSObject
 
+@property(nonatomic, strong) NSString *dbPathString;
+
 -(NSMutableArray*) getCompanies;
 + (id)sharedDAO;
 
-
-- (void)createCompany:(NSString*) companyName stockSymbol:(NSString *)stockSymbol;
-- (void)editCompany:(Company *)currentCompany WithCompanyName:(NSString *)newCompanyName;
-- (void)addProduct:(NSString*) productName WithProductWebsite:(NSString *)productWebsite ToCompany:(Company *)currentCompany;
-- (void)editProduct:(Product*)currentProduct WithProductName:(NSString*)newProductName WithProductWebsite:(NSString*)newProductWebsite;
+-(void)deleteCompany:(Company*) company;
+-(void)deleteProduct:(Product*) product;
+- (void)createCompany:(NSString*) companyName stockSymbol:(NSString *)stockSymbol companyLogo:(NSString*) companyLogo;
+- (void)editCompany:(Company *)currentCompany WithCompanyName:(NSString *)newCompanyName stockSymbol:(NSString *)newStockSymbol companyLogo:(NSString*) newCompanyLogo;
+- (void)addProduct:(NSString*) productName WithProductWebsite:(NSString *)productWebsite WithProductLogo:(NSString*)productLogo ToCompany:(Company *)currentCompany;
+- (void)editProduct:(Product*)currentProduct WithProductName:(NSString*)newProductName WithProductWebsite:(NSString*)newProductWebsite WithProductLogo:(NSString*)newProductLogo;
 
 @end

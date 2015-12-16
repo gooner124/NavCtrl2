@@ -18,7 +18,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.companyName.text = self.currentCompany.name;
-
+    self.stockSymbol.text = self.currentCompany.stockSymbol;
+    self.companyLogo.text = self.currentCompany.logo;
     
 }
 
@@ -40,11 +41,13 @@
 - (void)dealloc {
     [_editCompany release];
     [_companyName release];
+    [_stockSymbol release];
+    [_companyLogo release];
     [super dealloc];
 }
 
 - (IBAction)editCompanyButtonPressed:(id)sender {
-    [[DataAccessObject sharedDAO] editCompany:self.currentCompany WithCompanyName:self.companyName.text];
+    [[DataAccessObject sharedDAO] editCompany:self.currentCompany WithCompanyName:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 @end

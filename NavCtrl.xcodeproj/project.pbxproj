@@ -25,6 +25,8 @@
 		3445DFE41C1622EA0038AA8D /* vista2_pic.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3445DFE11C1622EA0038AA8D /* vista2_pic.jpeg */; };
 		3445DFEB1C16507D0038AA8D /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3445DFEA1C16507D0038AA8D /* WebPageViewController.m */; };
 		3445DFEF1C165B020038AA8D /* WebPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3445DFEE1C165B020038AA8D /* WebPage.xib */; };
+		347760EE1C2080D8001BA686 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 347760ED1C2080D8001BA686 /* libsqlite3.0.tbd */; };
+		347760F21C209AFC001BA686 /* Company_Product_DB in Resources */ = {isa = PBXBuildFile; fileRef = 347760F11C209AFC001BA686 /* Company_Product_DB */; };
 		34C2023E1C189444004E104E /* DataAccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C2023D1C189444004E104E /* DataAccessObject.m */; };
 		34C202431C18B19F004E104E /* AddCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C202411C18B19F004E104E /* AddCompanyViewController.m */; };
 		34C202441C18B19F004E104E /* AddCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C202421C18B19F004E104E /* AddCompanyViewController.xib */; };
@@ -86,6 +88,8 @@
 		3445DFE91C16507D0038AA8D /* WebPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPageViewController.h; sourceTree = "<group>"; };
 		3445DFEA1C16507D0038AA8D /* WebPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPageViewController.m; sourceTree = "<group>"; };
 		3445DFEE1C165B020038AA8D /* WebPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPage.xib; sourceTree = "<group>"; };
+		347760ED1C2080D8001BA686 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		347760F11C209AFC001BA686 /* Company_Product_DB */ = {isa = PBXFileReference; lastKnownFileType = file; path = Company_Product_DB; sourceTree = "<group>"; };
 		34C2023C1C189444004E104E /* DataAccessObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataAccessObject.h; sourceTree = "<group>"; };
 		34C2023D1C189444004E104E /* DataAccessObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataAccessObject.m; sourceTree = "<group>"; };
 		34C202401C18B19F004E104E /* AddCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCompanyViewController.h; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				347760EE1C2080D8001BA686 /* libsqlite3.0.tbd in Frameworks */,
 				34D77DC51C17333C0055A138 /* WebKit.framework in Frameworks */,
 				48A656B718163BF200746D36 /* CoreGraphics.framework in Frameworks */,
 				48A656B918163BF200746D36 /* UIKit.framework in Frameworks */,
@@ -274,6 +279,7 @@
 		48A656B318163BF200746D36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				347760ED1C2080D8001BA686 /* libsqlite3.0.tbd */,
 				34D77DC41C17333C0055A138 /* WebKit.framework */,
 				48A656B418163BF200746D36 /* Foundation.framework */,
 				48A656B618163BF200746D36 /* CoreGraphics.framework */,
@@ -306,6 +312,7 @@
 		48A656BB18163BF200746D36 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				347760F11C209AFC001BA686 /* Company_Product_DB */,
 				34EE4C391C19DCD300049C2D /* bullet_point.jpeg */,
 				3445DFDF1C1622EA0038AA8D /* tab_logo.jpeg */,
 				3445DFE01C1622EA0038AA8D /* V10_pic.jpeg */,
@@ -426,6 +433,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				347760F21C209AFC001BA686 /* Company_Product_DB in Resources */,
 				3445DFEF1C165B020038AA8D /* WebPage.xib in Resources */,
 				48A656EE1816468000746D36 /* Sunflower.gif in Resources */,
 				3445DFCC1C161A970038AA8D /* Samsung_Logo.png in Resources */,

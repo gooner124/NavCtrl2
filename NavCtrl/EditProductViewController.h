@@ -17,6 +17,7 @@
 @property(nonatomic, retain)Product *currentProduct;
 @property (retain, nonatomic) IBOutlet UITextField *productName;
 @property (retain, nonatomic) IBOutlet UITextField *productWebsite;
+@property (retain, nonatomic) IBOutlet UITextField *productLogo;
 @property (retain, nonatomic) IBOutlet UIButton *editProductButton;
 @property(retain, nonatomic) ProductViewController *productViewController;
 - (IBAction)editProductButtonPushed:(id)sender;

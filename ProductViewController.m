@@ -102,6 +102,9 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //Delete product from database
+        [[DataAccessObject sharedDAO] deleteProduct:[self.products objectAtIndex:[indexPath row]]];
+        
         // Delete the row from the data source
         [self.products removeObjectAtIndex: indexPath.row ];
         [tableView reloadData];

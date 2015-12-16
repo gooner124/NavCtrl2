@@ -38,12 +38,13 @@
     [_companyName release];
     [_createCompanyButton release];
     [_stockSymbol release];
+    [_companyLogo release];
     [super dealloc];
 }
 
 #pragma mark create company 
 - (IBAction)createCompanyButtonPressed:(id)sender {
-    [[DataAccessObject sharedDAO] createCompany:self.companyName.text stockSymbol:self.stockSymbol.text];
+    [[DataAccessObject sharedDAO] createCompany:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }

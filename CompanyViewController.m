@@ -146,8 +146,12 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //Delete From Database
+        [[DataAccessObject sharedDAO] deleteCompany:[self.companyList objectAtIndex:indexPath.row]];
+        
         // Delete the row from the data source
         [self.companyList removeObjectAtIndex: indexPath.row];
+        
         [tableView reloadData];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {

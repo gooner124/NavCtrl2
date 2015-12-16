@@ -13,6 +13,7 @@
 @interface AddCompanyViewController : UIViewController
 @property (retain, nonatomic) IBOutlet UITextField *companyName;
 @property (retain, nonatomic) IBOutlet UITextField *stockSymbol;
+@property (retain, nonatomic) IBOutlet UITextField *companyLogo;
 @property (retain, nonatomic) IBOutlet UIButton *createCompanyButton;
 
 - (IBAction)createCompanyButtonPressed:(id)sender;

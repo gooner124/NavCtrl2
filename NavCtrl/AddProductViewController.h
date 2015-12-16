@@ -16,6 +16,7 @@
 @property(nonatomic, retain) Company *currentCompany;
 @property (retain, nonatomic) IBOutlet UITextField *productName;
 @property (retain, nonatomic) IBOutlet UITextField *productWebsite;
+@property (retain, nonatomic) IBOutlet UITextField *productLogo;
 @property (retain, nonatomic) IBOutlet UIButton *addProductButton;
 - (IBAction)addProductButtonPressed:(id)sender;
 

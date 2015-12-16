@@ -19,6 +19,7 @@
     // Do any additional setup after loading the view from its nib.
     self.productName.text = self.currentProduct.productName;
     self.productWebsite.text = self.currentProduct.productURL;
+    self.productLogo.text = self.currentProduct.productLOGO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,11 +41,12 @@
     [_productName release];
     [_productWebsite release];
     [_editProductButton release];
+    [_productLogo release];
     [super dealloc];
 }
 - (IBAction)editProductButtonPushed:(id)sender {
     
-    [[DataAccessObject sharedDAO] editProduct:self.currentProduct WithProductName:self.productName.text WithProductWebsite:self.productWebsite.text];
+    [[DataAccessObject sharedDAO] editProduct:self.currentProduct WithProductName:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text];
     
     [self.navigationController popViewControllerAnimated:YES];
 

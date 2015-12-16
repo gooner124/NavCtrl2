@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditProductViewController">
             <connections>
                 <outlet property="editProductButton" destination="lps-Oc-1lm" id="lhx-Wh-FL1"/>
+                <outlet property="productLogo" destination="htw-9n-lsX" id="3UP-gK-sz1"/>
                 <outlet property="productName" destination="WBI-Ie-KB9" id="fDi-nB-sMO"/>
                 <outlet property="productWebsite" destination="ULy-2c-QjU" id="iEg-cg-mvP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -23,8 +24,18 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WBI-Ie-KB9">
+                    <rect key="frame" x="244" y="62" width="112" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="htw-9n-lsX">
+                    <rect key="frame" x="244" y="166" width="112" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f8Q-eJ-Acb">
-                    <rect key="frame" x="238" y="167" width="125" height="43"/>
+                    <rect key="frame" x="238" y="217" width="125" height="43"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lps-Oc-1lm">
                             <rect key="frame" x="11" y="7" width="102" height="30"/>
@@ -43,22 +54,21 @@
                         <constraint firstAttribute="height" constant="43" id="dlg-Jd-6Kq"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WBI-Ie-KB9">
-                    <rect key="frame" x="244" y="62" width="112" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
             </subviews>
             <color key="backgroundColor" red="0.60556999980000004" green="1" blue="0.58176699649999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="ULy-2c-QjU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0K0-gT-zzp"/>
-                <constraint firstItem="f8Q-eJ-Acb" firstAttribute="top" secondItem="ULy-2c-QjU" secondAttribute="bottom" constant="21" id="1o4-Di-eNS"/>
                 <constraint firstItem="f8Q-eJ-Acb" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="714-6n-gSr"/>
                 <constraint firstItem="ULy-2c-QjU" firstAttribute="top" secondItem="WBI-Ie-KB9" secondAttribute="bottom" constant="24" id="EUP-ee-J1Y"/>
+                <constraint firstItem="htw-9n-lsX" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-119" id="GwA-lW-AT1"/>
+                <constraint firstItem="htw-9n-lsX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="MF2-v2-Iw7"/>
                 <constraint firstItem="ULy-2c-QjU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="244" id="Np4-Zg-CCI"/>
+                <constraint firstItem="htw-9n-lsX" firstAttribute="top" secondItem="ULy-2c-QjU" secondAttribute="bottom" constant="20" id="P0O-4k-Xpc"/>
                 <constraint firstItem="WBI-Ie-KB9" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-223" id="bMV-gr-AGb"/>
+                <constraint firstItem="f8Q-eJ-Acb" firstAttribute="top" secondItem="htw-9n-lsX" secondAttribute="bottom" constant="21" id="dlx-uX-zON"/>
                 <constraint firstItem="WBI-Ie-KB9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="eYy-f2-Nd5"/>
                 <constraint firstItem="WBI-Ie-KB9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="244" id="tzR-v2-duq"/>
+                <constraint firstItem="htw-9n-lsX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="244" id="wK2-03-gwA"/>
             </constraints>
             <point key="canvasLocation" x="331" y="279"/>
         </view>
