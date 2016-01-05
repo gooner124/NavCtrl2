@@ -1,6 +1,6 @@
 //
 //  DataAccessObject.h
-//  NavCtrl - HIIIIIIIIIIII
+//  NavCtrl
 //
 //  Created by Matthew Paravati on 12/9/15.
 //  Copyright © 2015 Aditya Narayan. All rights reserved.
@@ -14,10 +14,13 @@
 @interface DataAccessObject : NSObject
 
 @property(nonatomic, strong) NSString *dbPathString;
+@property (nonatomic, strong) NSMutableArray *companyList;
+
 
 -(NSMutableArray*) getCompanies;
 + (id)sharedDAO;
-
+-(void)createOrOpenDB;
+-(NSMutableArray*) displayCompany;
 -(void)deleteCompany:(Company*) company;
 -(void)deleteProduct:(Product*) product;
 - (void)createCompany:(NSString*) companyName stockSymbol:(NSString *)stockSymbol companyLogo:(NSString*) companyLogo;

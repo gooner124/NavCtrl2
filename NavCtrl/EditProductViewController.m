@@ -37,18 +37,22 @@
 }
 */
 
-- (void)dealloc {
-    [_productName release];
-    [_productWebsite release];
-    [_editProductButton release];
-    [_productLogo release];
-    [super dealloc];
-}
 - (IBAction)editProductButtonPushed:(id)sender {
     
     [[DataAccessObject sharedDAO] editProduct:self.currentProduct WithProductName:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text];
     
     [self.navigationController popViewControllerAnimated:YES];
-
+    
 }
+
+- (void)dealloc {
+    [_productName release];
+    [_productWebsite release];
+    [_editProductButton release];
+    [_productLogo release];
+    [_productViewController release];
+    [_currentProduct release];
+    [super dealloc];
+}
+
 @end

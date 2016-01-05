@@ -12,10 +12,10 @@
 @interface Company : NSObject
 
 @property (nonatomic, assign) int uniqueId;
-@property (nonatomic, retain) NSString *name;
+@property (nonatomic, strong) NSString *name;
 @property (nonatomic,strong) NSString *logo;
-@property (nonatomic, retain) NSString *stockPrice;
-@property (nonatomic, retain) NSString *stockSymbol;
+@property (nonatomic, strong) NSString *stockPrice;
+@property (nonatomic, strong) NSString *stockSymbol;
 @property(nonatomic,strong) NSMutableArray *products;
 
 @end

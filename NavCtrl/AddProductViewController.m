@@ -34,17 +34,20 @@
 }
 */
 
+- (IBAction)addProductButtonPressed:(id)sender {
+    [[DataAccessObject sharedDAO] addProduct:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text ToCompany:self.currentCompany];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 - (void)dealloc {
     [_productName release];
     [_productWebsite release];
     [_addProductButton release];
     [_productLogo release];
+    [_currentCompany release];
     [super dealloc];
 }
-- (IBAction)addProductButtonPressed:(id)sender {
-    [[DataAccessObject sharedDAO] addProduct:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text ToCompany:self.currentCompany];
-    
-    [self.navigationController popViewControllerAnimated:YES];
 
-}
 @end

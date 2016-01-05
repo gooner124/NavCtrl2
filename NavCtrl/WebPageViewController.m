@@ -20,10 +20,12 @@
     
     WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
     WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
+    [theConfiguration release];
     wkWebView.navigationDelegate = self;
     
     [wkWebView loadRequest:[NSURLRequest requestWithURL:self.urlToLoad]];
     [self.view addSubview:wkWebView];
+    [wkWebView release]; wkWebView = nil;
 }
 
 - (void)didReceiveMemoryWarning {

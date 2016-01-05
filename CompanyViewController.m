@@ -30,7 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [[DataAccessObject sharedDAO] createOrOpenDB];
+    self.companyList = [[DataAccessObject sharedDAO] displayCompany];
     //preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
  
@@ -42,6 +43,7 @@
                                   initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                   target:self action:@selector(addButtonPressed:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    [addButton release]; addButton = nil;
 
     //Initialize the long press gesture recognizer
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(detectLongPress:)];
@@ -51,19 +53,29 @@
     
     //Add the long press gesture to the view
     [self.view addGestureRecognizer:longPressRecognizer];
+    [longPressRecognizer release]; longPressRecognizer = nil;
     
     self.title = @"Mobile device makers";
-
+    
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    
+    [self.productViewController setCurrentCompany:nil];
+    [self.productViewController setCurrentProduct:nil];
+    [self.productViewController setProducts:nil];
+    [self.editCompanyViewController setCurrentCompany:nil];
+    
+    
+    
     self.companyList = [[DataAccessObject sharedDAO] getCompanies];
     NSString *stockURL = @"http://finance.yahoo.com/d/quotes.csv?s=";
     for (Company *company in self.companyList) {
         NSString *symbol = company.stockSymbol;
+
         stockURL = [stockURL stringByAppendingString:symbol];
         stockURL = [stockURL stringByAppendingString:@"+"];
     }
@@ -71,32 +83,48 @@
     //NSURLSession to get stock prices of companies
     NSString *formatURL = @"&f=a";
     stockURL = [stockURL stringByAppendingString:formatURL];
+    
 
     self.stockPriceUrl = stockURL;
     NSURL *url = [NSURL URLWithString:self.stockPriceUrl];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+        NSURLSession *session = [NSURLSession sharedSession];
         
-        //Convert csv to string
-        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-        
-        self.stockPriceArray = companyAndStockPrices;
-        int i = 0;
-        for (Company *company in self.companyList) {
-            company.stockPrice = self.stockPriceArray[i];
-            i++;
+        NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+            //Convert csv to string
+            NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-    }];
-    [dataTask resume];
-    [self.tableView reloadData];
+            if (data == nil) {
+                NSLog(@"Error storing --- data is nil");
+                NSLog(@"Domain: %@", error.domain);
+                NSLog(@"Error Code: %ld", (long)error.code);
+                NSLog(@"Description: %@", [error localizedDescription]);
+                NSLog(@"Reason: %@", [error localizedFailureReason]);
+                NSLog(@"Company  Updated");
+                [dataString release]; dataString = nil;
+
+            }else {
+                NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                [dataString release]; dataString = nil;
+                
+                self.stockPriceArray = companyAndStockPrices;
+                int i = 0;
+                for (Company *company in self.companyList) {
+                    company.stockPrice = self.stockPriceArray[i];
+                    i++;
+                    
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                });
+            }
+            
+        }];
+        [dataTask resume];
+        [self.tableView reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,18 +147,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    self.cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (self.cell == nil) {
+        
+        UITableViewCell *tempCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        self.cell = tempCell;
+        [tempCell release]; tempCell = nil;
     }
     
     // Configure the cell...
-    Company *company = [self.companyList objectAtIndex:[indexPath row]];
-    cell.textLabel.text = company.name;
-    cell.imageView.image = [UIImage imageNamed:company.logo];
-    cell.detailTextLabel.text = company.stockPrice;
+    self.currentCompany = [self.companyList objectAtIndex:[indexPath row]];
+
+    self.cell.textLabel.text = self.currentCompany.name;
+    self.cell.imageView.image = [UIImage imageNamed:self.currentCompany.logo];
+    self.cell.detailTextLabel.text = self.currentCompany.stockPrice;
     
-    return cell;
+    return self.cell;
 }
 
 /*
@@ -164,11 +197,12 @@
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath{
-    Company *company = [[Company alloc] init];
-    company = [self.companyList objectAtIndex:fromIndexPath.row];
+    self.currentCompany = [self.companyList objectAtIndex:fromIndexPath.row];
     
     [self.companyList removeObjectAtIndex:fromIndexPath.row];
-    [self.companyList insertObject:company atIndex:toIndexPath.row];
+    [self.companyList insertObject:self.currentCompany atIndex:toIndexPath.row];
+
+
 }
 
 
@@ -186,28 +220,29 @@
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Company *company = [[Company alloc] init];
-    company = [self.companyList objectAtIndex:[indexPath row]];
-    self.productViewController.title = company.name;
-    self.productViewController.currentCompany = company;
+    self.currentCompany = [self.companyList objectAtIndex:[indexPath row]];
+    self.productViewController.title = self.currentCompany.name;
+    self.productViewController.currentCompany = self.currentCompany;
     
     [self.navigationController
         pushViewController:self.productViewController
         animated:YES];
-    
 
 }
 
 #pragma mark Add Company
 
 -(void)addButtonPressed: (id) sender {
-    self.addCompanyViewController = [[AddCompanyViewController alloc] initWithNibName:@"AddCompanyViewController" bundle:nil];
-    
+    AddCompanyViewController *viewController = [[AddCompanyViewController alloc] initWithNibName:@"AddCompanyViewController" bundle:nil];
+
+    self.addCompanyViewController = viewController;
+    [viewController release]; viewController = nil;
     self.addCompanyViewController.title = @"Add Company";
     
     [self.navigationController
      pushViewController:self.addCompanyViewController
      animated:YES];
+
 }
 
 #pragma mark edit company
@@ -218,21 +253,41 @@
         
         CGPoint location = [recognizer locationInView:self.tableView];
         NSIndexPath *touchedIndexPath = [self.tableView indexPathForRowAtPoint:location];
-        self.editCompanyViewController = [[EditCompanyViewController alloc] initWithNibName:@"EditCompanyViewController" bundle:nil];
+        EditCompanyViewController *viewController = [[EditCompanyViewController alloc] initWithNibName:@"EditCompanyViewController" bundle:nil];
+        self.editCompanyViewController = viewController;
+        [viewController release]; viewController = nil;
         
         self.editCompanyViewController.title = @"Edit Company Information";
-        Company *company = [[Company alloc] init];
-        company = [self.companyList objectAtIndex:[touchedIndexPath row]];
-        self.editCompanyViewController.currentCompany = company;
+        self.currentCompany = [self.companyList objectAtIndex:[touchedIndexPath row]];
+        self.editCompanyViewController.currentCompany = self.currentCompany;
         // Push the view controller.
         [self.navigationController pushViewController:self.editCompanyViewController animated:YES];
     }
 
 }
 
+#pragma mark memory management
 
 
-//- (void)dealloc {
-//    [super dealloc];
-//}
+- (void)dealloc {
+    [_companyList release];
+    [_stockPriceArray release];
+    [_stockPriceUrl release];
+    [_cell release];
+    [_currentCompany release];
+    
+    [_productViewController release];
+    [_addCompanyViewController release];
+    [_editCompanyViewController release];
+    
+    [super dealloc];
+}
 @end
+
+
+
+
+
+
+
+

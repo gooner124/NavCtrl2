@@ -9,10 +9,9 @@
 #import "DataAccessObject.h"
 
 @interface DataAccessObject() {
-    NSMutableArray *companyList;
-    NSMutableArray *productList;
     sqlite3 *Company_ProductDB;
     NSString *bulletPoint;
+    NSMutableArray *productList;
  
 }
 
@@ -34,7 +33,7 @@
 //    bulletPoint = @"bullet_point.jpeg";
     
     if (self) {
-        companyList = [[NSMutableArray alloc] init];
+        //companyList = [[NSMutableArray alloc] init];
 //        Company *apple = [[Company alloc] init];
 //        apple.name = @"Apple mobile devices";
 //        apple.stockSymbol = @"AAPL";
@@ -157,22 +156,23 @@
 #pragma mark get Company list
 
 -(NSMutableArray*) getCompanies {
-    [self createOrOpenDB];
-    [self displayCompany];
+    //[self createOrOpenDB];
+    //[self displayCompany];
     
-    return companyList;
+    return self.companyList;
 }
 
--(void) displayCompany {
+-(NSMutableArray *) displayCompany {
     sqlite3_stmt *company_statement;
     sqlite3_stmt *product_statement;
     if (sqlite3_open([self.dbPathString UTF8String], &Company_ProductDB)==SQLITE_OK)
     {
-        [companyList removeAllObjects];
+        [self.companyList removeAllObjects];
         NSString *companyQuerySQL = [NSString stringWithFormat:@"SELECT * FROM COMPANY"];
         NSString *productQuerySQL = [NSString stringWithFormat:@"SELECT * FROM PRODUCT"];
         const char *company_query_sql = [companyQuerySQL UTF8String];
         const char *product_query_sql = [productQuerySQL UTF8String];
+        NSMutableArray *companyArray = [[NSMutableArray alloc] init];
         if (sqlite3_prepare(Company_ProductDB, company_query_sql, -1, &company_statement, NULL) == SQLITE_OK)
         {
             while (sqlite3_step(company_statement)== SQLITE_ROW)
@@ -186,8 +186,12 @@
                 company.name = name;
                 company.stockSymbol = stockSymbol;
                 company.logo = logo;
-                productList = [[NSMutableArray alloc] init];
+                [name release]; name = nil;
+                [stockSymbol release]; stockSymbol = nil;
+                [logo release]; logo = nil;
+    
                 if (sqlite3_prepare(Company_ProductDB, product_query_sql, -1, &product_statement, NULL) == SQLITE_OK) {
+                    productList = [[NSMutableArray alloc] init];
                     
                     while (sqlite3_step(product_statement)== SQLITE_ROW) {
                         
@@ -203,19 +207,29 @@
                             product.productName = name;
                             product.productURL = url;
                             product.productLOGO = logo;
+                            [name release]; name = nil;
+                            [url release]; url = nil;
+                            [logo release]; logo = nil;
                             [productList addObject:product];
+                            [product release]; product = nil;
                         }
                         
                     }
-                    company.products = [[NSMutableArray alloc] initWithArray:productList];
-                    [companyList addObject:company];
-                    [productList removeAllObjects];
+                    
+                    company.products = productList;
+                    [companyArray addObject:company];
+                    [productList release]; productList = nil;
                 }
-                
+                [company release]; company = nil;
             }
+
         }
+        self.companyList = companyArray;
+        [companyArray release]; companyArray = nil;
+        
+        sqlite3_close(Company_ProductDB);
     }
-    
+    return self.companyList;
 }
 
 
@@ -233,12 +247,34 @@
             NSLog(@"Company added to DB");
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Add company Complete" message:@"Company added to DB" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
             [alert show];
+            [alert release];
             Company *company = [[Company alloc] init];
             company.name = companyName;
             company.stockSymbol = stockSymbol;
             company.logo = companyLogo;
             
-            [companyList addObject:company];
+            NSString *SQL = [NSString stringWithFormat:@"SELECT * FROM Company"];
+            const char *sql = [SQL UTF8String];
+            sqlite3_stmt *statement;
+            if (sqlite3_prepare(Company_ProductDB, sql, -1, &statement, NULL)==SQLITE_OK) {
+                while (sqlite3_step(statement)==SQLITE_ROW) {
+                    NSString *name = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                    if ([name isEqualToString:company.name]) {
+                        int uniqueId = sqlite3_column_int(statement, 0);
+                        company.uniqueId = uniqueId;
+                    }
+                    [name release]; name = nil;
+                }
+            }
+            
+            //company.uniqueId = 0;
+            NSMutableArray *array = [[NSMutableArray alloc]init];
+            company.products = array;
+            
+            [self.companyList addObject:company];
+            [array release]; array = nil;
+            [company release]; company = nil;
+
         }
         sqlite3_close(Company_ProductDB);
     }
@@ -257,24 +293,33 @@
         NSLog(@"Company  Updated");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Update" message:@"Company Updated" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
+        [alert release];
     }
         
     currentCompany.name = newCompanyName;
     currentCompany.stockSymbol = newStockSymbol;
     currentCompany.logo = newCompanyLogo;
+
 }
 
 #pragma mark delete company
 
 -(void)deleteCompany:(Company*) company {
     
-    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE from Company where name is '%s'", [company.name UTF8String]];
+    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE from Company where id is %d", (int)company.uniqueId];
     const char* delete_query = [deleteQuery UTF8String];
+    NSString *deleteProductQuery = [NSString stringWithFormat:@"DELETE from Product where company_id is %d", (int)company.uniqueId];
+    const char *delete_product_query = [deleteProductQuery UTF8String];
     if (sqlite3_exec(Company_ProductDB, delete_query, NULL, NULL, nil)==SQLITE_OK) {
         NSLog(@"Company Deleted");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete" message:@"Company Deleted" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
+        [alert release];
     }
+    if (sqlite3_exec(Company_ProductDB, delete_product_query, NULL, NULL, nil) == SQLITE_OK) {
+        NSLog(@"Products deleted");
+    }
+
 }
 
 
@@ -290,6 +335,7 @@
         NSLog(@"Product added to DB");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Add Product Complete" message:@"Product added to DB" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
+        [alert release];
     }
     
     Product *product = [[Product alloc] init];
@@ -298,6 +344,7 @@
     product.productLOGO = productLogo;
     
     [[currentCompany products] addObject:product];
+    [product release]; product = nil;
 }
 
 - (void)editProduct:(Product*)currentProduct WithProductName:(NSString*)newProductName WithProductWebsite:(NSString*)newProductWebsite WithProductLogo:(NSString*)newProductLogo {
@@ -310,6 +357,8 @@
         NSLog(@"Product  Updated");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Update" message:@"Product Updated" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
+        [alert release];
+        
     }
     
     currentProduct.productName = newProductName;
@@ -327,7 +376,19 @@
         NSLog(@"Product Deleted");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete" message:@"Product Deleted" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
+        [alert release];
     }
+}
+
+
+#pragma mark memory management
+- (void)dealloc {
+    [_dbPathString release];
+    [_companyList release];
+    [productList release];
+    
+    
+    [super dealloc];
 }
 
 

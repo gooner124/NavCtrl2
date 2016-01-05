@@ -13,11 +13,11 @@
 
 @interface AddProductViewController : UIViewController
 
-@property(nonatomic, retain) Company *currentCompany;
-@property (retain, nonatomic) IBOutlet UITextField *productName;
-@property (retain, nonatomic) IBOutlet UITextField *productWebsite;
-@property (retain, nonatomic) IBOutlet UITextField *productLogo;
-@property (retain, nonatomic) IBOutlet UIButton *addProductButton;
+@property(nonatomic, strong) Company *currentCompany;
+@property (strong, nonatomic) IBOutlet UITextField *productName;
+@property (strong, nonatomic) IBOutlet UITextField *productWebsite;
+@property (strong, nonatomic) IBOutlet UITextField *productLogo;
+@property (strong, nonatomic) IBOutlet UIButton *addProductButton;
 - (IBAction)addProductButtonPressed:(id)sender;
 
 @end

@@ -39,6 +39,7 @@
                                   target:self action:@selector(addButtonPressed:)];
     //Display the add and edit button on the right of the navigation bar
     self.navigationItem.rightBarButtonItems = @[self.editButtonItem, addButton];
+    [addButton release]; addButton = nil;
     
     //Initialize the long press gesture recognizer
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(detectLongPress:)];
@@ -48,15 +49,21 @@
     
     //Add the long press gesture to the view
     [self.view addGestureRecognizer:longPressRecognizer];
+    [longPressRecognizer release]; longPressRecognizer = nil;
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    
+    [self.addProductViewController setCurrentCompany:nil];
+    [self.editProductViewController setCurrentProduct:nil];
+    
     self.products = self.currentCompany.products;
     [self.tableView reloadData];
 }
+
 
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
@@ -77,15 +84,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    self.cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (self.cell == nil) {
+        UITableViewCell *tempCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.cell = tempCell;
+        [tempCell release]; tempCell = nil;
     }
     // Configure the cell...
-    cell.textLabel.text = [[self.products objectAtIndex:[indexPath row]] productName];
+    self.cell.textLabel.text = [[self.products objectAtIndex:[indexPath row]] productName];
     UIImage *image= [UIImage imageNamed:[[self.products objectAtIndex:[indexPath row]] productLOGO]];
-    cell.imageView.image = image;
-    return cell;
+    self.cell.imageView.image = image;
+    return self.cell;
 }
 
 /*
@@ -118,10 +127,9 @@
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    Product *currentProduct = [[Product alloc] init];
-    currentProduct = [self.products objectAtIndex:fromIndexPath.row];
+    self.currentProduct = [self.products objectAtIndex:fromIndexPath.row];
     [self.products removeObjectAtIndex:fromIndexPath.row];
-    [self.products insertObject:currentProduct atIndex:toIndexPath.row];
+    [self.products insertObject:self.currentProduct atIndex:toIndexPath.row];
 
 }
 
@@ -143,7 +151,9 @@
 {
     // Navigation logic may go here, for example:
     // Create the next view controller.
-    self.webPageViewController = [[WebPageViewController alloc] initWithNibName:@"WebPage" bundle:nil];
+    WebPageViewController *viewController = [[WebPageViewController alloc] initWithNibName:@"WebPage" bundle:nil];
+    self.webPageViewController = viewController;
+    [viewController release]; viewController = nil;
 
     // Pass the selected object to the new view controller.    
     self.webPageViewController.title = [[self.products objectAtIndex:[indexPath row]] productName];
@@ -158,7 +168,9 @@
 
 #pragma mark add product
 -(void) addButtonPressed: (id) sender {
-    self.addProductViewController = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
+    AddProductViewController *viewController = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
+    self.addProductViewController = viewController;
+    [viewController release]; viewController = nil;
     
     self.addProductViewController.title = @"Add Product";
     self.addProductViewController.currentCompany = self.currentCompany;
@@ -177,19 +189,27 @@
         CGPoint location = [recognizer locationInView:self.tableView];
         NSIndexPath *touchedIndexPath = [self.tableView indexPathForRowAtPoint:location];
         
-        self.editProductViewController = [[EditProductViewController alloc] initWithNibName:@"EditProductViewController" bundle:nil];
+        EditProductViewController *viewController = [[EditProductViewController alloc] initWithNibName:@"EditProductViewController" bundle:nil];
+        self.editProductViewController = viewController;
+        [viewController release]; viewController = nil;
         
         self.editProductViewController.title = @"Edit Product Information";
-        Product *product = [[Product alloc] init];
-        product = [self.currentCompany.products objectAtIndex:[touchedIndexPath row]];
-        self.editProductViewController.currentProduct = product;
+        self.currentProduct = [self.currentCompany.products objectAtIndex:[touchedIndexPath row]];
+        self.editProductViewController.currentProduct = self.currentProduct;
         // Push the view controller.
         [self.navigationController pushViewController:self.editProductViewController animated:YES];
     }
 }
 
 - (void)dealloc {
-    [self.webPageViewController release];
+    [_products release];
+    [_currentCompany release];
+    [_currentProduct release];
+    [_cell release];
+    [_webPageViewController release];
+    [_editProductViewController release];
+    [_addProductViewController release];
+    
     [super dealloc];
 }
 

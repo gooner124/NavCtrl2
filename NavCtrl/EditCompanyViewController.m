@@ -38,16 +38,18 @@
 }
 */
 
+- (IBAction)editCompanyButtonPressed:(id)sender {
+    [[DataAccessObject sharedDAO] editCompany:self.currentCompany WithCompanyName:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)dealloc {
     [_editCompany release];
     [_companyName release];
     [_stockSymbol release];
     [_companyLogo release];
+    [_currentCompany release];
     [super dealloc];
 }
 
-- (IBAction)editCompanyButtonPressed:(id)sender {
-    [[DataAccessObject sharedDAO] editCompany:self.currentCompany WithCompanyName:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
 @end

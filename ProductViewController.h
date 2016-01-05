@@ -16,11 +16,12 @@
 
 @interface ProductViewController : UITableViewController
 
-@property (nonatomic, retain) NSMutableArray *products;
-@property (nonatomic,retain) Company *currentCompany;
+@property (nonatomic, strong) NSMutableArray *products;
+@property (nonatomic,strong) Company *currentCompany;
+@property (nonatomic, strong) UITableViewCell *cell;
+@property (nonatomic, strong) Product *currentProduct;
 
-
-@property (nonatomic, retain) WebPageViewController *webPageViewController;
+@property (nonatomic, strong) WebPageViewController *webPageViewController;
 @property (nonatomic, strong) AddProductViewController *addProductViewController;
 @property (nonatomic, strong) EditProductViewController *editProductViewController;
 

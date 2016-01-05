@@ -34,6 +34,14 @@
 }
 */
 
+#pragma mark create company
+- (IBAction)createCompanyButtonPressed:(id)sender {
+    [[DataAccessObject sharedDAO] createCompany:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
+
 - (void)dealloc {
     [_companyName release];
     [_createCompanyButton release];
@@ -42,10 +50,4 @@
     [super dealloc];
 }
 
-#pragma mark create company 
-- (IBAction)createCompanyButtonPressed:(id)sender {
-    [[DataAccessObject sharedDAO] createCompany:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-}
 @end

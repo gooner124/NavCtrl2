@@ -10,4 +10,13 @@
 
 @implementation Product
 
+-(void)dealloc {
+    
+    [_productName release];
+    [_productLOGO release];
+    [_productURL release];
+    
+    [super dealloc];
+}
+
 @end
