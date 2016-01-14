@@ -14,12 +14,13 @@
 
 @interface EditProductViewController : UIViewController
 
-@property(nonatomic, strong)Product *currentProduct;
-@property (strong, nonatomic) IBOutlet UITextField *productName;
-@property (strong, nonatomic) IBOutlet UITextField *productWebsite;
-@property (strong, nonatomic) IBOutlet UITextField *productLogo;
-@property (strong, nonatomic) IBOutlet UIButton *editProductButton;
-@property(strong, nonatomic) ProductViewController *productViewController;
+@property (nonatomic, retain)Product *currentProduct;
+@property (nonatomic, retain) NSIndexPath *currentIndex;
+@property (retain, nonatomic) IBOutlet UITextField *productName;
+@property (retain, nonatomic) IBOutlet UITextField *productWebsite;
+@property (retain, nonatomic) IBOutlet UITextField *productLogo;
+@property (retain, nonatomic) IBOutlet UIButton *editProductButton;
+@property (retain, nonatomic) ProductViewController *productViewController;
 - (IBAction)editProductButtonPushed:(id)sender;
 
 @end

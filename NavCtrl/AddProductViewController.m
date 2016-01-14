@@ -35,7 +35,7 @@
 */
 
 - (IBAction)addProductButtonPressed:(id)sender {
-    [[DataAccessObject sharedDAO] addProduct:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text ToCompany:self.currentCompany];
+    [[DataAccessObject sharedDAO] addProduct:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text ToCompany:self.currentCompany WithCurrentIndex:self.currentIndex];
     
     [self.navigationController popViewControllerAnimated:YES];
     

@@ -17,16 +17,17 @@
 
 @interface CompanyViewController : UITableViewController
 
-@property (nonatomic, strong) NSMutableArray *companyList;
-@property (nonatomic, strong) NSString *stockPriceUrl;
-@property (nonatomic, strong) NSArray *stockPriceArray;
-@property (nonatomic, strong) UITableViewCell *cell;
-@property (nonatomic, strong) Company *currentCompany;
+@property (nonatomic, retain) NSMutableArray *companyList;
+@property (nonatomic, retain) NSString *stockPriceUrl;
+@property (nonatomic, retain) NSArray *stockPriceArray;
+@property (nonatomic, retain) UITableViewCell *cell;
+@property (nonatomic, retain) Company *currentCompany;
+@property (nonatomic, retain) NSIndexPath *currentIndex;
 
 
-@property (nonatomic, strong) IBOutlet  ProductViewController *productViewController;
-@property (nonatomic, strong) AddCompanyViewController *addCompanyViewController;
-@property (nonatomic, strong) EditCompanyViewController *editCompanyViewController;
+@property (nonatomic, retain) IBOutlet  ProductViewController *productViewController;
+@property (nonatomic, retain) AddCompanyViewController *addCompanyViewController;
+@property (nonatomic, retain) EditCompanyViewController *editCompanyViewController;
 
 
 @end

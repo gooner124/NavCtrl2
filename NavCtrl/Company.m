@@ -10,6 +10,7 @@
 
 @implementation Company
 
+
 -(void)dealloc {
     
     [_name release];

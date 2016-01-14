@@ -19,7 +19,7 @@
     // Do any additional setup after loading the view.
     
     WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
-    WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
+    WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds] configuration:theConfiguration];
     [theConfiguration release];
     wkWebView.navigationDelegate = self;
     

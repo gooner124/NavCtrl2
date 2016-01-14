@@ -37,8 +37,16 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                   initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                   target:self action:@selector(addButtonPressed:)];
+    
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+                                  target:self action:@selector(saveButtonPressed:)];
+    
+    UIBarButtonItem *undoButton = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemUndo
+                                  target:self action:@selector(undoButtonPressed:)];
     //Display the add and edit button on the right of the navigation bar
-    self.navigationItem.rightBarButtonItems = @[self.editButtonItem, addButton];
+    self.navigationItem.rightBarButtonItems = @[saveButton, undoButton, addButton, self.editButtonItem];
     [addButton release]; addButton = nil;
     
     //Initialize the long press gesture recognizer
@@ -58,8 +66,10 @@
     [super viewWillAppear:animated];
     
     [self.addProductViewController setCurrentCompany:nil];
+    [self.addProductViewController setCurrentIndex:nil];
     [self.editProductViewController setCurrentProduct:nil];
-    
+    [self.editProductViewController setCurrentIndex:nil];
+
     self.products = self.currentCompany.products;
     [self.tableView reloadData];
 }
@@ -112,7 +122,8 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //Delete product from database
-        [[DataAccessObject sharedDAO] deleteProduct:[self.products objectAtIndex:[indexPath row]]];
+        self.currentProduct = [self.currentCompany.products objectAtIndex:indexPath.row];
+        [[DataAccessObject sharedDAO] deleteProduct: self.currentIndex.row AndProduct:self.currentProduct];
         
         // Delete the row from the data source
         [self.products removeObjectAtIndex: indexPath.row ];
@@ -174,6 +185,7 @@
     
     self.addProductViewController.title = @"Add Product";
     self.addProductViewController.currentCompany = self.currentCompany;
+    self.addProductViewController.currentIndex = self.currentIndex;
     
     [self.navigationController
      pushViewController:self.addProductViewController
@@ -196,9 +208,27 @@
         self.editProductViewController.title = @"Edit Product Information";
         self.currentProduct = [self.currentCompany.products objectAtIndex:[touchedIndexPath row]];
         self.editProductViewController.currentProduct = self.currentProduct;
+        self.editProductViewController.currentIndex = self.currentIndex;
         // Push the view controller.
         [self.navigationController pushViewController:self.editProductViewController animated:YES];
     }
+}
+
+#pragma mark save button
+
+-(void)saveButtonPressed: (id) sender {
+    
+    [[DataAccessObject sharedDAO] saveChanges];
+}
+
+#pragma mark undo button
+-(void)undoButtonPressed: (id)sender {
+    [[DataAccessObject sharedDAO] undoChanges];
+    self.companyList = [[DataAccessObject sharedDAO] getCompanies];
+    self.currentCompany = [self.companyList objectAtIndex:self.currentIndex.row];
+    self.products = self.currentCompany.products;
+    [self.tableView reloadData];
+    
 }
 
 - (void)dealloc {

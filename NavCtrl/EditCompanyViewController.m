@@ -39,7 +39,7 @@
 */
 
 - (IBAction)editCompanyButtonPressed:(id)sender {
-    [[DataAccessObject sharedDAO] editCompany:self.currentCompany WithCompanyName:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text];
+    [[DataAccessObject sharedDAO] editCompany:self.currentCompany WithCompanyName:self.companyName.text stockSymbol:self.stockSymbol.text companyLogo:self.companyLogo.text AndCurrentIndex:self.currentIndex];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

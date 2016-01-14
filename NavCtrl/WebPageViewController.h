@@ -11,6 +11,6 @@
 
 @interface WebPageViewController : UIViewController <WKNavigationDelegate>
 
-@property (nonatomic, strong) NSURL *urlToLoad;
+@property (nonatomic, retain) NSURL *urlToLoad;
 
 @end

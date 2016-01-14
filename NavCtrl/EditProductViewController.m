@@ -39,7 +39,7 @@
 
 - (IBAction)editProductButtonPushed:(id)sender {
     
-    [[DataAccessObject sharedDAO] editProduct:self.currentProduct WithProductName:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text];
+    [[DataAccessObject sharedDAO] editProduct:self.currentProduct WithProductName:self.productName.text WithProductWebsite:self.productWebsite.text WithProductLogo:self.productLogo.text WithCurrentIndex:self.currentIndex];
     
     [self.navigationController popViewControllerAnimated:YES];
     

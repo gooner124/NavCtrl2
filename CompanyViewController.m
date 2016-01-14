@@ -30,8 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[DataAccessObject sharedDAO] createOrOpenDB];
-    self.companyList = [[DataAccessObject sharedDAO] displayCompany];
+    [[DataAccessObject sharedDAO] initModelContext];
+    
     //preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
  
@@ -42,8 +42,16 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                   initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                   target:self action:@selector(addButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+                                  target:self action:@selector(saveButtonPressed:)];
+    UIBarButtonItem *undoButton = [[UIBarButtonItem alloc]
+                                   initWithBarButtonSystemItem:UIBarButtonSystemItemUndo
+                                   target:self action:@selector(undoButtonPressed:)];
+    self.navigationItem.rightBarButtonItems = @[saveButton, undoButton, addButton];
     [addButton release]; addButton = nil;
+    [saveButton release]; saveButton = nil;
+    [undoButton release]; undoButton = nil;
 
     //Initialize the long press gesture recognizer
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(detectLongPress:)];
@@ -57,6 +65,7 @@
     
     self.title = @"Mobile device makers";
     
+    [[DataAccessObject sharedDAO] loadAllCompanies];
     
 }
 
@@ -64,66 +73,16 @@
     
     [super viewWillAppear:animated];
     
+    [self.productViewController setCompanyList:nil];
     [self.productViewController setCurrentCompany:nil];
     [self.productViewController setCurrentProduct:nil];
     [self.productViewController setProducts:nil];
+    [self.productViewController setCurrentIndex:nil];
     [self.editCompanyViewController setCurrentCompany:nil];
-    
-    
+    [self.editCompanyViewController setCurrentIndex:nil];
     
     self.companyList = [[DataAccessObject sharedDAO] getCompanies];
-    NSString *stockURL = @"http://finance.yahoo.com/d/quotes.csv?s=";
-    for (Company *company in self.companyList) {
-        NSString *symbol = company.stockSymbol;
-
-        stockURL = [stockURL stringByAppendingString:symbol];
-        stockURL = [stockURL stringByAppendingString:@"+"];
-    }
-    
-    //NSURLSession to get stock prices of companies
-    NSString *formatURL = @"&f=a";
-    stockURL = [stockURL stringByAppendingString:formatURL];
-    
-
-    self.stockPriceUrl = stockURL;
-    NSURL *url = [NSURL URLWithString:self.stockPriceUrl];
-
-        NSURLSession *session = [NSURLSession sharedSession];
-        
-        NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-            //Convert csv to string
-            NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            
-            if (data == nil) {
-                NSLog(@"Error storing --- data is nil");
-                NSLog(@"Domain: %@", error.domain);
-                NSLog(@"Error Code: %ld", (long)error.code);
-                NSLog(@"Description: %@", [error localizedDescription]);
-                NSLog(@"Reason: %@", [error localizedFailureReason]);
-                NSLog(@"Company  Updated");
-                [dataString release]; dataString = nil;
-
-            }else {
-                NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-                [dataString release]; dataString = nil;
-                
-                self.stockPriceArray = companyAndStockPrices;
-                int i = 0;
-                for (Company *company in self.companyList) {
-                    company.stockPrice = self.stockPriceArray[i];
-                    i++;
-                    
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.tableView reloadData];
-                });
-            }
-            
-        }];
-        [dataTask resume];
-        [self.tableView reloadData];
+    [self getStockPrices];
 
 }
 
@@ -180,7 +139,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //Delete From Database
-        [[DataAccessObject sharedDAO] deleteCompany:[self.companyList objectAtIndex:indexPath.row]];
+
+        [[DataAccessObject sharedDAO] deleteCompany:indexPath.row];
         
         // Delete the row from the data source
         [self.companyList removeObjectAtIndex: indexPath.row];
@@ -223,6 +183,10 @@
     self.currentCompany = [self.companyList objectAtIndex:[indexPath row]];
     self.productViewController.title = self.currentCompany.name;
     self.productViewController.currentCompany = self.currentCompany;
+    NSIndexPath *index = indexPath;
+    self.currentIndex = index;
+    self.productViewController.currentIndex = self.currentIndex;
+    self.productViewController.companyList = self.companyList;
     
     [self.navigationController
         pushViewController:self.productViewController
@@ -259,10 +223,84 @@
         
         self.editCompanyViewController.title = @"Edit Company Information";
         self.currentCompany = [self.companyList objectAtIndex:[touchedIndexPath row]];
+        self.currentIndex = touchedIndexPath;
         self.editCompanyViewController.currentCompany = self.currentCompany;
+        self.editCompanyViewController.currentIndex = self.currentIndex;
         // Push the view controller.
         [self.navigationController pushViewController:self.editCompanyViewController animated:YES];
     }
+
+}
+
+#pragma mark get stock prices
+
+-(void) getStockPrices {
+    NSString *stockURL = @"http://finance.yahoo.com/d/quotes.csv?s=";
+    for (Company *company in self.companyList) {
+        NSString *symbol = company.stockSymbol;
+        
+        stockURL = [stockURL stringByAppendingString:symbol];
+        stockURL = [stockURL stringByAppendingString:@"+"];
+    }
+    
+    //NSURLSession to get stock prices of companies
+    NSString *formatURL = @"&f=a";
+    stockURL = [stockURL stringByAppendingString:formatURL];
+    
+    
+    self.stockPriceUrl = stockURL;
+    NSURL *url = [NSURL URLWithString:self.stockPriceUrl];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        //Convert csv to string
+        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        if (data == nil) {
+            NSLog(@"Error storing --- data is nil");
+            NSLog(@"Domain: %@", error.domain);
+            NSLog(@"Error Code: %ld", (long)error.code);
+            NSLog(@"Description: %@", [error localizedDescription]);
+            NSLog(@"Reason: %@", [error localizedFailureReason]);
+            NSLog(@"Company  Updated");
+            [dataString release]; dataString = nil;
+            
+        }else {
+            NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+            [dataString release]; dataString = nil;
+            
+            self.stockPriceArray = companyAndStockPrices;
+            int i = 0;
+            for (Company *company in self.companyList) {
+                company.stockPrice = self.stockPriceArray[i];
+                i++;
+                
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }
+        
+    }];
+    [dataTask resume];
+    [self.tableView reloadData];
+}
+
+#pragma mark save button
+-(void)saveButtonPressed: (id) sender {
+    
+    [[DataAccessObject sharedDAO] saveChanges];
+}
+
+#pragma mark undo button
+-(void)undoButtonPressed: (id)sender {
+    [[DataAccessObject sharedDAO] undoChanges];
+    self.companyList = [[DataAccessObject sharedDAO] getCompanies];
+    [self getStockPrices];
+    [self.tableView reloadData];
 
 }
 

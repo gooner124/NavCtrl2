@@ -11,11 +11,12 @@
 #import "Company.h"
 
 @interface EditCompanyViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UITextField *companyName;
-@property (strong, nonatomic) IBOutlet UITextField *stockSymbol;
-@property (strong, nonatomic) IBOutlet UITextField *companyLogo;
-@property (strong, nonatomic) Company *currentCompany;
+@property (retain, nonatomic) IBOutlet UITextField *companyName;
+@property (retain, nonatomic) IBOutlet UITextField *stockSymbol;
+@property (retain, nonatomic) IBOutlet UITextField *companyLogo;
+@property (retain, nonatomic) Company *currentCompany;
+@property (nonatomic, retain) NSIndexPath *currentIndex;
 
-@property (strong, nonatomic) IBOutlet UIButton *editCompany;
+@property (retain, nonatomic) IBOutlet UIButton *editCompany;
 - (IBAction)editCompanyButtonPressed:(id)sender;
 @end

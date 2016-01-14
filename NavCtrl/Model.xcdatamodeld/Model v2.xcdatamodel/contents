@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1509" minimumToolsVersion="Xcode 7.0">
+    <entity name="CompanyMO" representedClassName="CompanyMO" syncable="YES">
+        <attribute name="logo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stockPrice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stockSymbol" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="products" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ProductMO" inverseName="company" inverseEntity="ProductMO" syncable="YES"/>
+    </entity>
+    <entity name="ProductMO" representedClassName="ProductMO" syncable="YES">
+        <attribute name="productLogo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="company" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CompanyMO" inverseName="products" inverseEntity="CompanyMO" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CompanyMO" positionX="-45" positionY="0" width="128" height="120"/>
+        <element name="ProductMO" positionX="196" positionY="-0" width="128" height="103"/>
+    </elements>
+</model>
