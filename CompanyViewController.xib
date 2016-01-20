@@ -19,8 +19,9 @@
             <nil key="simulatedStatusBarMetrics"/>
             <connections>
                 <outlet property="dataSource" destination="-1" id="9"/>
-                <outlet property="delegate" destination="-1" id="10"/>
+                <outlet property="delegate" destination="-1" id="C7U-vK-v6f"/>
             </connections>
+            <point key="canvasLocation" x="280" y="-746"/>
         </tableView>
         <viewController id="Xwu-Pd-0Xh" userLabel="ProductViewController" customClass="ProductViewController">
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
