@@ -8,6 +8,7 @@
 
 #import "WebPageViewController.h"
 
+
 @interface WebPageViewController ()
 
 @end
@@ -17,13 +18,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.urlToLoad];
+
     WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
     WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds] configuration:theConfiguration];
     [theConfiguration release];
     wkWebView.navigationDelegate = self;
     
-    [wkWebView loadRequest:[NSURLRequest requestWithURL:self.urlToLoad]];
+    [wkWebView loadRequest: request];
     [self.view addSubview:wkWebView];
     [wkWebView release]; wkWebView = nil;
 }

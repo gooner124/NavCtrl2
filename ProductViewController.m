@@ -12,6 +12,8 @@
 #import "EditProductViewController.h"
 #import "AddProductViewController.h"
 
+static NSString * const BaseURLString = @"http://";
+
 @interface ProductViewController ()
 
 @end
@@ -168,7 +170,12 @@
 
     // Pass the selected object to the new view controller.    
     self.webPageViewController.title = [[self.products objectAtIndex:[indexPath row]] productName];
-    NSURL *url = [NSURL URLWithString:[[self.products objectAtIndex:[indexPath row]] productURL]];
+    
+    NSString *stringURL = [NSString stringWithString:BaseURLString];
+    NSString *prodURL = [[self.products objectAtIndex:[indexPath row]] productURL];
+    stringURL = [stringURL stringByAppendingString: prodURL];
+    
+    NSURL *url = [NSURL URLWithString: stringURL];
     self.webPageViewController.urlToLoad = url;
     
     

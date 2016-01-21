@@ -85,6 +85,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     self.companyList = [[DataAccessObject sharedDAO] getCompanies];
     [self getStockPrices];
+    [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(getStockPrices) userInfo:nil repeats:YES];
     
 }
 
@@ -232,44 +233,37 @@ static NSString * const reuseIdentifier = @"Cell";
     
     
     self.stockPriceUrl = stockURL;
-    NSURL *url = [NSURL URLWithString:self.stockPriceUrl];
     
-    NSURLSession *session = [NSURLSession sharedSession];
+    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-        //Convert csv to string
-        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        if (data == nil) {
-            NSLog(@"Error storing --- data is nil");
-            NSLog(@"Domain: %@", error.domain);
-            NSLog(@"Error Code: %ld", (long)error.code);
-            NSLog(@"Description: %@", [error localizedDescription]);
-            NSLog(@"Reason: %@", [error localizedFailureReason]);
-            NSLog(@"Company  Updated");
-            [dataString release]; dataString = nil;
+    [sessionManager GET:self.stockPriceUrl parameters:nil progress:nil success:^(NSURLSessionTask *task,
+                                                                                 id responseObject) {
+        NSString *dataString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
             
-        }else {
-            NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-            [dataString release]; dataString = nil;
+        NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:
+                                          [NSCharacterSet newlineCharacterSet]];
+        [dataString release]; dataString = nil;
             
-            self.stockPriceArray = companyAndStockPrices;
-            int i = 0;
-            for (Company *company in self.companyList) {
-                company.stockPrice = self.stockPriceArray[i];
-                i++;
-                
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
-            });
+        self.stockPriceArray = companyAndStockPrices;
+        int i = 0;
+        for (Company *company in self.companyList) {
+            company.stockPrice = self.stockPriceArray[i];
+            i++;
         }
-        
+        [self.collectionView reloadData];
+    
+    }failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        NSLog(@"Domain: %@", error.domain);
+        NSLog(@"Error Code: %ld", (long)error.code);
+        NSLog(@"Description: %@", [error localizedDescription]);
+        NSLog(@"Reason: %@", [error localizedFailureReason]);
+        NSLog(@"Company  Updated");
+    
     }];
-    [dataTask resume];
-    [self.collectionView reloadData];
+    
 }
 
 #pragma mark save button
