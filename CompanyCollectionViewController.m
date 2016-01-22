@@ -85,6 +85,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.editCompanyViewController setCurrentCompany:nil];
     [self.editCompanyViewController setCurrentIndex:nil];
     
+    [[DataAccessObject sharedDAO] reloadDataFromContext];
     self.companyList = [[DataAccessObject sharedDAO] getCompanies];
     [self getStockPrices];
     [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(getStockPrices) userInfo:nil repeats:YES];
@@ -124,11 +125,11 @@ static NSString * const reuseIdentifier = @"Cell";
     self.cell = (CollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
-    self.currentCompany = [self.companyList objectAtIndex:[indexPath row]];
+    Company *currentCompany = [self.companyList objectAtIndex:[indexPath row]];
     
-    self.cell.name.text = self.currentCompany.name;
-    self.cell.stockPrice.text = self.currentCompany.stockPrice;
-    self.cell.logo.image = [UIImage imageNamed: self.currentCompany.logo];
+    self.cell.name.text = currentCompany.name;
+    self.cell.stockPrice.text = currentCompany.stockPrice;
+    self.cell.logo.image = [UIImage imageNamed: currentCompany.logo];
 
     return self.cell;
 }
@@ -139,9 +140,9 @@ static NSString * const reuseIdentifier = @"Cell";
     self.productCollectionViewController = viewController;
     [viewController release]; viewController = nil;
     
-    self.currentCompany = [self.companyList objectAtIndex:[indexPath row]];
-    self.productCollectionViewController.title = self.currentCompany.name;
-    self.productCollectionViewController.currentCompany = self.currentCompany;
+    Company *currentCompany = [self.companyList objectAtIndex:[indexPath row]];
+    self.productCollectionViewController.title = currentCompany.name;
+    self.productCollectionViewController.currentCompany = currentCompany;
     NSIndexPath *index = indexPath;
     self.currentIndex = index;
     self.productCollectionViewController.currentIndex = self.currentIndex;
@@ -166,9 +167,9 @@ static NSString * const reuseIdentifier = @"Cell";
                                                            style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction * action) {
                                                                  [[DataAccessObject sharedDAO] deleteCompany:touchedIndexPath.row];
-                                                                 [self.companyList removeObjectAtIndex:
-                                                                  touchedIndexPath.row];
-                                                                 [self.collectionView reloadData];
+                                                               //  [self.companyList removeObjectAtIndex:
+                                                               //   touchedIndexPath.row];
+                                                                 [self.collectionView deleteItemsAtIndexPaths:@[touchedIndexPath]];
                                                              
                                                              }];
         UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
@@ -208,9 +209,9 @@ static NSString * const reuseIdentifier = @"Cell";
         [viewController release]; viewController = nil;
         
         self.editCompanyViewController.title = @"Edit Company Information";
-        self.currentCompany = [self.companyList objectAtIndex:[touchedIndexPath row]];
+        Company *currentCompany = [self.companyList objectAtIndex:[touchedIndexPath row]];
         self.currentIndex = touchedIndexPath;
-        self.editCompanyViewController.currentCompany = self.currentCompany;
+        self.editCompanyViewController.currentCompany = currentCompany;
         self.editCompanyViewController.currentIndex = self.currentIndex;
         // Push the view controller.
         [self.navigationController pushViewController:self.editCompanyViewController animated:YES];
@@ -273,7 +274,6 @@ static NSString * const reuseIdentifier = @"Cell";
         NSLog(@"Error Code: %ld", (long)error.code);
         NSLog(@"Description: %@", [error localizedDescription]);
         NSLog(@"Reason: %@", [error localizedFailureReason]);
-        NSLog(@"Company  Updated");
         
         if (self.networkConnection) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Network Connection" message:@"Sorry about this hiccup" preferredStyle:UIAlertControllerStyleAlert];

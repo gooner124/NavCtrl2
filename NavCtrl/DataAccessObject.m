@@ -248,6 +248,7 @@
             self.companyList = array;
             
             [array release];
+            
         }
         
     }
@@ -322,9 +323,6 @@
     self.companyList = array;
     
     [array release];
-    
-
-
 }
 
 #pragma mark create or edit Company
@@ -357,7 +355,7 @@
     [company release]; company = nil;
 
     
-    [self reloadDataFromContext];
+    //[self reloadDataFromContext];
 }
 
 - (void)editCompany:(Company *)currentCompany WithCompanyName:(NSString *)newCompanyName stockSymbol:(NSString *)newStockSymbol companyLogo:(NSString*) newCompanyLogo AndCurrentIndex:(NSIndexPath*) currentIndex{
@@ -372,7 +370,7 @@
     currentCompany.stockSymbol = newStockSymbol;
     currentCompany.logo = newCompanyLogo;
     
-    [self reloadDataFromContext];
+    //[self reloadDataFromContext];
 }
 
 #pragma mark delete company
@@ -380,6 +378,7 @@
 -(void)deleteCompany:(NSUInteger) index {
     CompanyMO *companyMO = [self.MOCompanyList objectAtIndex:index];
     
+    /*
     NSString *name = companyMO.name;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -393,10 +392,14 @@
     CompanyMO *objectToDelete = [results objectAtIndex:0];
     
     [self.context deleteObject:objectToDelete];
+     */
 
     [self.MOCompanyList removeObjectAtIndex:index];
+    [self.context deleteObject:companyMO];
+
+    [self.companyList removeObjectAtIndex:index];
     
-    [self reloadDataFromContext];
+    //[self reloadDataFromContext];
     
 }
 
@@ -422,7 +425,7 @@
     [[currentCompany products] addObject:product];
     [product release]; product = nil;
     
-    [self reloadDataFromContext];
+    //[self reloadDataFromContext];
 }
 
 - (void)editProduct:(Product*)currentProduct WithProductName:(NSString*)newProductName WithProductWebsite:(NSString*)newProductWebsite WithProductLogo:(NSString*)newProductLogo WithCurrentIndex:(NSIndexPath*)currentIndex {
@@ -442,7 +445,7 @@
     currentProduct.productURL = newProductWebsite;
     currentProduct.productLOGO = newProductLogo;
     
-    [self reloadDataFromContext];
+    //[self reloadDataFromContext];
 }
 
 #pragma mark delete product
@@ -459,6 +462,7 @@
         }
     }
     
+ 
 //    NSString *name = product.productName;
 //    
 //    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -473,8 +477,9 @@
 //    ProductMO *objectToDelete = [results objectAtIndex:0];
 //    
 //    [self.context deleteObject:objectToDelete];
-
-    [self reloadDataFromContext];
+    
+    
+    //[self reloadDataFromContext];
 
 }
 

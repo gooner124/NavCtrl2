@@ -158,12 +158,11 @@ static NSString * const reuseIdentifier = @"Cell";
         UIAlertAction *actionDelete = [UIAlertAction actionWithTitle:@"Delete Product"
                                                                style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction * action) {
-                                                                 self.currentProduct = [self.currentCompany.products objectAtIndex:touchedIndexPath.row];
-                                                                 [[DataAccessObject sharedDAO] deleteProduct:self.currentIndex.row AndProduct:self.currentProduct];
+                                                                 Product *currentProduct = [self.currentCompany.products objectAtIndex:touchedIndexPath.row];
+                                                                 [[DataAccessObject sharedDAO] deleteProduct:self.currentIndex.row AndProduct:currentProduct];
                                                                  [self.currentCompany.products removeObjectAtIndex:
                                                                   touchedIndexPath.row];
-                                                                 [self.collectionView reloadData];
-                                                                 
+                                                                 [self.collectionView deleteItemsAtIndexPaths:@[touchedIndexPath]];                                                                 
                                                              }];
         UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
                                                                style:UIAlertActionStyleDefault
