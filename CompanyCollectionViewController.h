@@ -27,6 +27,7 @@
 @property (nonatomic, retain) Company *currentCompany;
 @property (nonatomic, retain) NSIndexPath *currentIndex;
 @property (nonatomic, retain) CollectionViewCell *cell;
+@property (nonatomic) BOOL networkConnection;
 
 
 @property (nonatomic, retain) ProductCollectionViewController *productCollectionViewController;

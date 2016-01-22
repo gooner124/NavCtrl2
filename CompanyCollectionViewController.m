@@ -67,8 +67,10 @@ static NSString * const reuseIdentifier = @"Cell";
     [swipeRecognizer release]; swipeRecognizer = nil;
     
     self.title = @"Mobile device makers";
+    self.networkConnection = true;
     
     [[DataAccessObject sharedDAO] loadAllCompanies];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -238,8 +240,19 @@ static NSString * const reuseIdentifier = @"Cell";
     sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
+    
     [sessionManager GET:self.stockPriceUrl parameters:nil progress:nil success:^(NSURLSessionTask *task,
                                                                                  id responseObject) {
+        if (!self.networkConnection) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Network Connection is back" message:@"We're back online!" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+            self.networkConnection = true;
+        }
+        
         NSString *dataString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
             
         NSArray *companyAndStockPrices = [dataString componentsSeparatedByCharactersInSet:
@@ -261,6 +274,16 @@ static NSString * const reuseIdentifier = @"Cell";
         NSLog(@"Description: %@", [error localizedDescription]);
         NSLog(@"Reason: %@", [error localizedFailureReason]);
         NSLog(@"Company  Updated");
+        
+        if (self.networkConnection) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Network Connection" message:@"Sorry about this hiccup" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+            self.networkConnection = false;
+        }
     
     }];
     

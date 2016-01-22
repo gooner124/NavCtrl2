@@ -188,6 +188,7 @@ static NSString * const reuseIdentifier = @"Cell";
      pushViewController:self.addProductViewController
      animated:YES];
     
+    
 }
 
 #pragma mark edit product

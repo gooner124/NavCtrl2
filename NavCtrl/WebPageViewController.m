@@ -26,6 +26,7 @@
     wkWebView.navigationDelegate = self;
     
     [wkWebView loadRequest: request];
+
     [self.view addSubview:wkWebView];
     [wkWebView release]; wkWebView = nil;
 }
@@ -34,6 +35,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

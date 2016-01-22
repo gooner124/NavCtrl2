@@ -246,14 +246,12 @@
                 
             }
             self.companyList = array;
-            //NSLog(@"Companies Count %lu", (unsigned long)[self.MOCompanyList count]);
             
             [array release];
         }
         
     }
     
-    [self getCompanies];
 }
 
 #pragma mark reload data from context
@@ -322,11 +320,9 @@
         
     }
     self.companyList = array;
-    //NSLog(@"Companies Count %lu", (unsigned long)[self.MOCompanyList count]);
     
     [array release];
     
-    [self getCompanies];
 
 
 }
@@ -343,7 +339,7 @@
     NSSet *productSet = [[NSSet alloc] init];
     [companyMO setProducts:productSet];
     [productSet release];
-    //[self saveChanges];
+ 
     [self.MOCompanyList addObject:companyMO];
     
     Company *company = [[Company alloc] init];
@@ -360,7 +356,6 @@
     [array release]; array = nil;
     [company release]; company = nil;
 
-    //[self getCompanies];
     
     [self reloadDataFromContext];
 }
@@ -372,8 +367,6 @@
     [companyMO setName:newCompanyName];
     [companyMO setLogo:newCompanyLogo];
     [companyMO setStockSymbol:newStockSymbol];
-    //[self saveChanges];
-
     
     currentCompany.name = newCompanyName;
     currentCompany.stockSymbol = newStockSymbol;
@@ -386,10 +379,22 @@
 
 -(void)deleteCompany:(NSUInteger) index {
     CompanyMO *companyMO = [self.MOCompanyList objectAtIndex:index];
-    [self.context deleteObject:companyMO];
-    //[self saveChanges];
+    
+    NSString *name = companyMO.name;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"CompanyMO" inManagedObjectContext:self.context]];
+    
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"name == %@", name]];
+    NSError* error = nil;
+    NSArray* results = [self.context executeFetchRequest:fetchRequest error:&error];
+    [fetchRequest release];
+    
+    CompanyMO *objectToDelete = [results objectAtIndex:0];
+    
+    [self.context deleteObject:objectToDelete];
+
     [self.MOCompanyList removeObjectAtIndex:index];
-    //NSLog(@"Companies Count %lu", (unsigned long)[self.MOCompanyList count]);
     
     [self reloadDataFromContext];
     
@@ -407,12 +412,7 @@
     [productMO setProductLogo:productLogo];
     [productMO setProductUrl:productWebsite];
     
-    //NSLog(@"p count %lu", [companyMO.products count]);
-    
     [companyMO addProductsObject:productMO];
-    //[self saveChanges];
-    //NSLog(@"p count %lu", [companyMO.products count]);
-
     
     Product *product = [[Product alloc] init];
     product.productName = productName;
@@ -435,7 +435,6 @@
             [productMO setProductName:newProductName];
             [productMO setProductLogo:newProductLogo];
             [productMO setProductUrl:newProductWebsite];
-            //[self saveChanges];
         }
     }
     
@@ -456,11 +455,25 @@
         
         if ([prodName isEqualToString:MOprodName]) {
             [self.context deleteObject:productMO];
-            //[self saveChanges];
             break;
         }
     }
     
+//    NSString *name = product.productName;
+//    
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    [fetchRequest setEntity:[NSEntityDescription entityForName:@"ProductMO" inManagedObjectContext:self.context]];
+//    
+//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"productName == %@", name]];
+//    NSError* error = nil;
+//    NSArray* results = [self.context executeFetchRequest:fetchRequest error:&error];
+//    [fetchRequest release];
+//
+//    
+//    ProductMO *objectToDelete = [results objectAtIndex:0];
+//    
+//    [self.context deleteObject:objectToDelete];
+
     [self reloadDataFromContext];
 
 }
@@ -482,7 +495,7 @@
 -(void) undoChanges {
     [self.context undo];
     [self reloadDataFromContext];
-    //[self loadAllCompanies];
+    
 }
 
 #pragma mark memory management
@@ -491,8 +504,8 @@
     [_companyList release];
     [productList release];
     [_MOCompanyList release];
-//    [model release];
-//    [context release];
+    [_model release];
+    [_context release];
     
     
     [super dealloc];
